@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A(DAI) — Seed Document</title>
+  <meta name="description" content="Visual walkthrough of the A(DAI) Combined Design Brief v3.1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700;800&family=Syne+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:#FFFFFF;--ink:#1A1A1A;--mint:#7aff9c;--sage:#c2dbbf;--sky:#85b0e1;
+      --muted:#444444;--faint:#DDDDDD;--rule:rgba(0,0,0,0.06);
+      --section-gap:8rem;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    ::selection{background:var(--mint);color:#0C0F0E;}
+    html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;}
+    body{background:var(--bg);color:var(--ink);overflow-x:hidden;}
+    body::after{content:'';position:fixed;inset:0;z-index:999;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity:0.045;}
+
+    /* GRID RULES */
+    .vr,.hr{position:fixed;z-index:1;pointer-events:none;background:var(--rule);}
+    .vr{top:0;bottom:0;width:1px;}.hr{left:0;right:0;height:1px;}
+    .vr-l{left:33.333%;}.vr-r{left:66.666%;}.hr-m{top:50%;}
+
+    /* ANIMATIONS */
+    @keyframes arrive{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+    @keyframes draw-line{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1);}
+    .reveal.visible{opacity:1;transform:translateY(0);}
+
+    /* NAV */
+    .nav-bar{position:fixed;top:0;left:0;right:0;z-index:100;padding:2rem 3.2rem;
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(255,255,255,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--rule);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);}
+    .nav-brand{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(1.2rem,2.5vw,1.6rem);
+      font-weight:400;letter-spacing:-0.03em;color:var(--ink);text-decoration:none;}
+    .nav-brand .paren{color:var(--mint);font-style:italic;}
+    .nav-links{display:flex;gap:1.6rem;align-items:center;}
+    .nav-links a{font-family:'Syne Mono',monospace;font-size:0.52rem;letter-spacing:0.16em;
+      color:var(--muted);text-decoration:none;text-transform:uppercase;transition:color 0.2s;cursor:pointer;}
+    .nav-links a:hover,.nav-links a.active{color:var(--mint);}
+    .nav-version{font-family:'Syne Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;
+      color:var(--faint);margin-left:0.8rem;}
+
+    /* HERO */
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;
+      padding:2.8rem 3.2rem 4rem;position:relative;}
+    .hero-label{font-family:'Syne Mono',monospace;font-size:0.58rem;letter-spacing:0.22em;
+      color:var(--mint);text-transform:uppercase;margin-bottom:1.2rem;display:flex;align-items:center;gap:0.7rem;
+      opacity:0;animation:arrive 1.2s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;}
+    .hero-label::before{content:'';display:block;width:24px;height:1px;background:var(--mint);}
+    .hero-title{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(2.8rem,6vw,5.5rem);
+      font-weight:400;letter-spacing:-0.03em;line-height:0.92;color:var(--ink);max-width:900px;
+      opacity:0;animation:arrive 1.2s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;}
+    .hero-title .paren{color:var(--mint);font-style:italic;}
+    .hero-sub{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(1rem,2vw,1.3rem);
+      font-style:italic;color:var(--muted);line-height:1.55;max-width:560px;margin-top:1.5rem;
+      opacity:0;animation:arrive 1.2s cubic-bezier(0.16,1,0.3,1) 0.7s forwards;}
+    .hero-meta{position:absolute;bottom:4rem;right:3.2rem;display:flex;flex-direction:column;
+      align-items:flex-end;gap:0.8rem;opacity:0;animation:arrive 1.2s cubic-bezier(0.16,1,0.3,1) 0.9s forwards;}
+    .hero-stat{display:flex;align-items:center;gap:0.55rem;}
+    .hero-dot{width:5px;height:5px;border-radius:50%;background:var(--mint);box-shadow:0 0 6px var(--mint);animation:pulse 2.5s ease-in-out infinite;}
+    .hero-stat-text{font-family:'Syne Mono',monospace;font-size:0.54rem;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;}
+
+    /* SHELL */
+    .shell{max-width:720px;margin:0 auto;padding:0 3.2rem;}
+    .shell-wide{max-width:960px;margin:0 auto;padding:0 3.2rem;}
+
+    /* SECTIONS */
+    .section{padding:var(--section-gap) 0;}
+    .section-number{font-family:'Syne Mono',monospace;font-size:0.5rem;letter-spacing:0.2em;
+      color:var(--mint);text-transform:uppercase;margin-bottom:0.6rem;}
+    .section-title{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(1.8rem,3.5vw,2.8rem);
+      font-weight:400;letter-spacing:-0.02em;color:var(--ink);line-height:1;margin-bottom:1.2rem;}
+    .section-lead{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(0.95rem,1.8vw,1.2rem);
+      font-style:italic;color:var(--muted);line-height:1.55;margin-bottom:2.5rem;max-width:560px;}
+    .body-text{font-family:'Syne',sans-serif;font-size:0.72rem;color:var(--muted);line-height:2.0;margin-bottom:1.8rem;}
+    .body-text strong{color:var(--ink);font-weight:600;}
+
+    /* DIVIDERS */
+    .divider{width:100%;height:1px;background:var(--rule);margin:var(--section-gap) 0;}
+    .accent-line{width:32px;height:2px;background:var(--mint);margin-bottom:1.8rem;}
+
+    /* AXIS */
+    .axis-block{margin:3rem 0;padding:2rem 0;border-top:1px solid var(--rule);}
+    .axis-row{display:grid;grid-template-columns:1fr 32px 1fr;gap:0;align-items:start;margin-bottom:2rem;}
+    .axis-left{text-align:right;padding-right:1.5rem;}
+    .axis-right{padding-left:1.5rem;}
+    .axis-label{font-family:'Syne Mono',monospace;font-size:0.56rem;letter-spacing:0.12em;
+      color:var(--mint);text-transform:uppercase;margin-bottom:0.4rem;}
+    .axis-desc{font-family:'Syne',sans-serif;font-size:0.68rem;color:var(--muted);line-height:1.8;}
+    .axis-vs{font-family:'Instrument Serif',Georgia,serif;font-size:0.9rem;font-style:italic;
+      color:var(--faint);text-align:center;line-height:32px;}
+
+    /* ROOM CARDS */
+    .room-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--faint);margin:3rem 0;}
+    .room-card{background:var(--bg);padding:2.2rem;transition:background 0.25s;}
+    .room-card:hover{background:#FAFAFA;}
+    .room-number{font-family:'Syne Mono',monospace;font-size:0.5rem;letter-spacing:0.2em;color:var(--faint);margin-bottom:1rem;}
+    .room-name{font-family:'Instrument Serif',Georgia,serif;font-size:1.4rem;font-weight:400;
+      color:var(--ink);margin-bottom:0.5rem;letter-spacing:-0.01em;}
+    .room-register{font-family:'Syne Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;
+      color:var(--mint);text-transform:uppercase;margin-bottom:0.8rem;}
+    .room-desc{font-family:'Syne',sans-serif;font-size:0.68rem;color:var(--muted);line-height:1.85;}
+    .room-generates{font-family:'Instrument Serif',Georgia,serif;font-size:0.78rem;font-style:italic;
+      color:var(--muted);margin-top:1rem;padding-top:0.8rem;border-top:1px solid var(--rule);}
+    .room-card.post-basel{opacity:0.5;position:relative;}
+    .room-card.post-basel::after{content:'POST-BASEL';position:absolute;top:1rem;right:1rem;
+      font-family:'Syne Mono',monospace;font-size:0.44rem;letter-spacing:0.18em;
+      color:var(--mint);text-transform:uppercase;border:1px solid var(--mint);padding:0.2rem 0.5rem;}
+
+    /* FLOW DIAGRAM */
+    .flow{margin:3rem 0;}
+    .flow-step{display:flex;align-items:flex-start;gap:1.5rem;margin-bottom:0;}
+    .flow-line{display:flex;flex-direction:column;align-items:center;min-width:24px;}
+    .flow-dot{width:8px;height:8px;border-radius:50%;border:1.5px solid var(--ink);background:var(--bg);flex-shrink:0;z-index:2;}
+    .flow-dot.active{background:var(--mint);border-color:var(--mint);box-shadow:0 0 8px var(--mint);}
+    .flow-connector{width:1px;height:40px;background:var(--rule);}
+    .flow-content{padding-bottom:2rem;}
+    .flow-label{font-family:'Syne Mono',monospace;font-size:0.54rem;letter-spacing:0.14em;
+      color:var(--mint);text-transform:uppercase;margin-bottom:0.3rem;}
+    .flow-desc{font-family:'Syne',sans-serif;font-size:0.68rem;color:var(--muted);line-height:1.8;}
+
+    /* METRICS */
+    .metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin:2.5rem 0;}
+    .metric{padding:1.5rem 0;border-top:1px solid var(--rule);}
+    .metric-name{font-family:'Syne Mono',monospace;font-size:0.54rem;letter-spacing:0.12em;
+      color:var(--ink);text-transform:uppercase;margin-bottom:0.5rem;}
+    .metric-desc{font-family:'Syne',sans-serif;font-size:0.66rem;color:var(--muted);line-height:1.8;}
+    .metric.alarm .metric-name{color:var(--mint);}
+
+    /* TIDE CYCLE */
+    .tide-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--faint);margin:3rem 0;}
+    .tide-card{background:var(--bg);padding:2rem;}
+    .tide-interval{font-family:'Instrument Serif',Georgia,serif;font-size:1.8rem;font-weight:400;
+      color:var(--ink);letter-spacing:-0.02em;margin-bottom:0.3rem;}
+    .tide-name{font-family:'Syne Mono',monospace;font-size:0.54rem;letter-spacing:0.14em;
+      color:var(--mint);text-transform:uppercase;margin-bottom:0.8rem;}
+    .tide-desc{font-family:'Syne',sans-serif;font-size:0.66rem;color:var(--muted);line-height:1.8;}
+
+    /* EDGE TABLE */
+    .edge-table{width:100%;border-collapse:collapse;margin:2rem 0;}
+    .edge-table th{font-family:'Syne Mono',monospace;font-size:0.5rem;letter-spacing:0.14em;
+      color:var(--mint);text-transform:uppercase;text-align:left;padding:0.6rem 0;border-bottom:1px solid var(--rule);}
+    .edge-table td{font-family:'Syne',sans-serif;font-size:0.64rem;color:var(--muted);
+      padding:0.5rem 0;border-bottom:1px solid var(--rule);line-height:1.6;vertical-align:top;}
+    .edge-table td:first-child{font-family:'Syne Mono',monospace;font-size:0.58rem;letter-spacing:0.06em;color:var(--ink);}
+
+    /* PRINCIPLE LIST */
+    .principle{display:flex;gap:1.2rem;padding:1.2rem 0;border-bottom:1px solid var(--rule);}
+    .principle-num{font-family:'Syne Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;
+      color:var(--faint);min-width:2rem;padding-top:0.15rem;}
+    .principle-text{font-family:'Syne',sans-serif;font-size:0.68rem;color:var(--muted);line-height:1.85;}
+    .principle-text strong{color:var(--ink);font-weight:600;}
+
+    /* GAP TABLE */
+    .gap-card{padding:1.5rem 0;border-bottom:1px solid var(--rule);}
+    .gap-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;}
+    .gap-id{font-family:'Syne Mono',monospace;font-size:0.48rem;letter-spacing:0.1em;color:var(--faint);}
+    .gap-status{font-family:'Syne Mono',monospace;font-size:0.46rem;letter-spacing:0.12em;text-transform:uppercase;
+      padding:0.15rem 0.45rem;border-radius:2px;}
+    .gap-status.resolved{color:var(--mint);border:1px solid var(--mint);}
+    .gap-status.open{color:var(--muted);border:1px solid var(--faint);}
+    .gap-status.new{color:var(--sky);border:1px solid var(--sky);}
+    .gap-name{font-family:'Syne',sans-serif;font-size:0.72rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;}
+    .gap-desc{font-family:'Syne',sans-serif;font-size:0.64rem;color:var(--muted);line-height:1.8;}
+
+    /* TIMELINE */
+    .timeline{margin:3rem 0;}
+    .tl-row{display:grid;grid-template-columns:80px 1fr;gap:1.5rem;padding:1rem 0;border-bottom:1px solid var(--rule);}
+    .tl-week{font-family:'Syne Mono',monospace;font-size:0.54rem;letter-spacing:0.1em;color:var(--mint);padding-top:0.1rem;}
+    .tl-week.highlight{color:var(--ink);font-weight:600;}
+    .tl-what{font-family:'Syne',sans-serif;font-size:0.66rem;color:var(--muted);line-height:1.8;}
+    .tl-owner{font-family:'Syne Mono',monospace;font-size:0.5rem;color:var(--faint);margin-top:0.3rem;}
+
+    /* INTEROP */
+    .interop-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--faint);margin:2.5rem 0;}
+    .interop-card{background:var(--bg);padding:1.8rem;}
+    .interop-name{font-family:'Syne Mono',monospace;font-size:0.56rem;letter-spacing:0.1em;
+      color:var(--ink);text-transform:uppercase;margin-bottom:0.5rem;}
+    .interop-desc{font-family:'Syne',sans-serif;font-size:0.64rem;color:var(--muted);line-height:1.8;}
+
+    /* TAGS */
+    .tags{display:flex;flex-wrap:wrap;gap:0.45rem;margin:1rem 0;}
+    .tag{font-family:'Syne Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;
+      color:var(--muted);border:1px solid var(--faint);padding:0.25rem 0.5rem;text-transform:uppercase;}
+
+    /* TOC */
+    .toc{margin:3rem 0;}
+    .toc-item{display:flex;align-items:baseline;gap:1rem;padding:0.7rem 0;border-bottom:1px solid var(--rule);
+      cursor:pointer;transition:color 0.2s;text-decoration:none;}
+    .toc-item:hover .toc-name{color:var(--mint);}
+    .toc-num{font-family:'Syne Mono',monospace;font-size:0.5rem;letter-spacing:0.14em;color:var(--faint);min-width:2.5rem;}
+    .toc-name{font-family:'Syne',sans-serif;font-size:0.72rem;color:var(--ink);font-weight:500;letter-spacing:0.02em;transition:color 0.2s;}
+
+    /* MOBILE */
+    @media(max-width:700px){
+      .shell,.shell-wide{padding:0 1.6rem;}
+      .nav-bar{padding:1.2rem 1.6rem;}
+      .hero{padding:1.6rem 1.6rem 3rem;}
+      .hero-meta{position:relative;bottom:auto;right:auto;align-items:flex-start;margin-top:2rem;}
+      .room-grid,.tide-grid,.metric-grid,.interop-grid{grid-template-columns:1fr;}
+      .axis-row{grid-template-columns:1fr;gap:0.8rem;}
+      .axis-left{text-align:left;padding-right:0;}
+      .axis-right{padding-left:0;}
+      .axis-vs{display:none;}
+      .nav-links{gap:0.8rem;}
+      :root{--section-gap:5rem;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="vr vr-l"></div><div class="vr vr-r"></div><div class="hr hr-m"></div>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <a href="#" class="nav-brand">A<span class="paren">(</span>DAI<span class="paren">)</span></a>
+  <div class="nav-links">
+    <a href="#vision">Vision</a>
+    <a href="#rooms">Rooms</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#sensing">Sensing</a>
+    <a href="#governance">Governance</a>
+    <a href="#basel">Basel</a>
+    <span class="nav-version">v3.1</span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-label">Seed Document v3.1</div>
+  <h1 class="hero-title">A<span class="paren">(</span>DAI<span class="paren">)</span> Combined Design Brief &amp; Garden Logic</h1>
+  <p class="hero-sub">A knowledge commons for the digital arts field. Relational mapping, commons governance, and field-level synthesis &mdash; the infrastructure the field is missing.</p>
+  <div class="hero-meta">
+    <div class="hero-stat">
+      <div class="hero-dot"></div>
+      <span class="hero-stat-text">Active &mdash; March 2026</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-text">CC-BY-SA 4.0</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-text">94-item field research</span>
+    </div>
+  </div>
+</section>
+
+<!-- TOC -->
+<div class="shell">
+  <div class="toc reveal">
+    <a class="toc-item" href="#vision"><span class="toc-num">01</span><span class="toc-name">Vision</span></a>
+    <a class="toc-item" href="#strategy"><span class="toc-num">02</span><span class="toc-name">Strategy</span></a>
+    <a class="toc-item" href="#concept"><span class="toc-num">03</span><span class="toc-name">Concept</span></a>
+    <a class="toc-item" href="#governance"><span class="toc-num">04</span><span class="toc-name">Governance</span></a>
+    <a class="toc-item" href="#rooms"><span class="toc-num">05</span><span class="toc-name">The Rooms</span></a>
+    <a class="toc-item" href="#architecture"><span class="toc-num">06</span><span class="toc-name">Architecture</span></a>
+    <a class="toc-item" href="#sensing"><span class="toc-num">07</span><span class="toc-name">The Sensing Loop</span></a>
+    <a class="toc-item" href="#prompting"><span class="toc-num">08</span><span class="toc-name">Prompting Layer</span></a>
+    <a class="toc-item" href="#participation"><span class="toc-num">09</span><span class="toc-name">Participation</span></a>
+    <a class="toc-item" href="#basel"><span class="toc-num">10&ndash;12</span><span class="toc-name">Basel &amp; Timeline</span></a>
+    <a class="toc-item" href="#principles"><span class="toc-num">13</span><span class="toc-name">Design Principles</span></a>
+    <a class="toc-item" href="#gaps"><span class="toc-num">14</span><span class="toc-name">Gap Table</span></a>
+  </div>
+</div>
+
+<!-- 01 VISION -->
+<div class="shell">
+  <section class="section reveal" id="vision">
+    <div class="section-number">01</div>
+    <h2 class="section-title">Vision</h2>
+    <div class="section-lead">An institution is not a building or a board. An institution is a persistent pattern of intention.</div>
+    <div class="accent-line"></div>
+    <p class="body-text">A(DAI) is a digital arts institute. The indefinite article is load-bearing. The system produces <strong>a reading</strong> of the field &mdash; structurally honest, provenance-tracked, and contestable. Never the reading.</p>
+    <p class="body-text">It is a 10-year infrastructure project. Not a platform. Not a marketplace. A <strong>knowledge commons</strong>: a semantic graph where practitioner intelligence, lived experience, and field signals accumulate into something the field can query, traverse, and build on.</p>
+    <p class="body-text">The market gave the field provenance of ownership. It never gave it <strong>provenance of meaning</strong>. A(DAI) builds the missing layer.</p>
+
+    <div class="axis-block">
+      <div class="axis-row">
+        <div class="axis-left">
+          <div class="axis-label">Attention</div>
+          <div class="axis-desc">"What's interesting?" Scans for novelty. Gravitates toward visibility. Reinforces concentration. Output: a feed, a ranking.</div>
+        </div>
+        <div class="axis-vs">vs</div>
+        <div class="axis-right">
+          <div class="axis-label">Intention</div>
+          <div class="axis-desc">"What does the commons need?" Scans for gaps. Gravitates toward what is absent. Redistributes. Output: a prompt, a tension, a structural diagnosis.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 02 STRATEGY -->
+<div class="shell">
+  <section class="section reveal" id="strategy">
+    <div class="section-number">02</div>
+    <h2 class="section-title">Strategy</h2>
+    <div class="section-lead">Two modes, one commons. The advisory layer is only worth something because the commons beneath it is real.</div>
+    <div class="accent-line"></div>
+
+    <p class="body-text"><strong>Mode 1</strong> is the commons. Open, field-owned intelligence under CC-BY-SA. It is never sold. It is the work.</p>
+    <p class="body-text"><strong>Mode 2</strong> is advisory services for capital actors &mdash; collectors, curators, institutions &mdash; built on top of Mode 1 without replacing it. Designed around specific decision-support: institutional acquisition context, conservation triage, exhibition programming.</p>
+    <p class="body-text"><strong>Scaffolding, not delegation.</strong> Practitioner agents surface candidates. The practitioner reviews, judges, submits. The agent presents &mdash; it does not decide. Autonomous submission is a trust-level upgrade, not the starting configuration.</p>
+
+    <div class="metric-grid">
+      <div class="metric"><div class="metric-name">Relational density</div><div class="metric-desc">How richly connected the graph is. Weighted by edge type diversity per node.</div></div>
+      <div class="metric"><div class="metric-name">Edge diversity</div><div class="metric-desc">Distribution of edge types. Prevents collapse into a single relation type.</div></div>
+      <div class="metric"><div class="metric-name">Provenance quality</div><div class="metric-desc">Percentage of signals with complete provenance chains.</div></div>
+      <div class="metric"><div class="metric-name">Frontier signal rate</div><div class="metric-desc">Rate of signals generating new concept nodes. 90-day lifecycle.</div></div>
+      <div class="metric alarm"><div class="metric-name">Interpretive diversity</div><div class="metric-desc">Primary alarm. Low diversity = system failure regardless of other metrics. Includes agent output diversity.</div></div>
+    </div>
+  </section>
+</div>
+
+<!-- 03 CONCEPT -->
+<div class="shell">
+  <section class="section reveal" id="concept">
+    <div class="section-number">03</div>
+    <h2 class="section-title">Concept</h2>
+    <div class="section-lead">Artists and works at the centre of gravity. Tensions are the most valuable thing the system can surface.</div>
+    <div class="accent-line"></div>
+    <p class="body-text">The core metaphor is <strong>gravitational</strong>. A node accumulates mass from the density and diversity of its relational connections &mdash; not from fame or market value. Concept and scene nodes orient around the practitioner and artwork, not the reverse.</p>
+    <p class="body-text"><strong>Coherence without consensus.</strong> Two contradictory readings are coherent when both have provenance, both are reachable, neither is deprecated, and the tension between them is a named entity. Disagreement is evidence.</p>
+    <p class="body-text"><strong>Consent architecture.</strong> Machine-readable terms: use scope, attribution, duration, revocation. Third-party representation governed: unconfirmed nodes, self/other-contributed data distinction, pseudonym protection.</p>
+  </section>
+</div>
+
+<!-- 04 GOVERNANCE -->
+<div class="shell">
+  <section class="section reveal" id="governance">
+    <div class="section-number">04</div>
+    <h2 class="section-title">Governance</h2>
+    <div class="section-lead">Architectural, not bureaucratic. Governance at the gate, not inside the data.</div>
+    <div class="accent-line"></div>
+
+    <div class="flow">
+      <div class="flow-step"><div class="flow-line"><div class="flow-dot active"></div><div class="flow-connector"></div></div>
+        <div class="flow-content"><div class="flow-label">Now</div><div class="flow-desc">Founding team makes all editorial decisions. Acknowledged, not hidden. All parameters committed to git with rationale.</div></div></div>
+      <div class="flow-step"><div class="flow-line"><div class="flow-dot"></div><div class="flow-connector"></div></div>
+        <div class="flow-content"><div class="flow-label">Launch</div><div class="flow-desc">Trust-based auto-merge. New contributors start reviewed, build track record, earn auto-merge. A profile field, not a committee.</div></div></div>
+      <div class="flow-step"><div class="flow-line"><div class="flow-dot"></div><div class="flow-connector"></div></div>
+        <div class="flow-content"><div class="flow-label">Post-Basel</div><div class="flow-desc">Contributor feedback. Flags aggregate. At threshold, trigger review with public response. Dissent logged even when the decision holds.</div></div></div>
+      <div class="flow-step"><div class="flow-line"><div class="flow-dot"></div><div class="flow-connector"></div></div>
+        <div class="flow-content"><div class="flow-label">50+ contributors</div><div class="flow-desc">Formal contestation. Documented challenge process. Rotating review group. Outcomes as precedent.</div></div></div>
+      <div class="flow-step"><div class="flow-line"><div class="flow-dot"></div></div>
+        <div class="flow-content"><div class="flow-label">200+ contributors</div><div class="flow-desc">Cooperative governance. Founding team authority structurally constrained. Contributors vote on processing rules, not individual signals. Fork right operative from day one.</div></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- 05 ROOMS -->
+<div class="shell-wide">
+  <section class="section reveal" id="rooms">
+    <div class="shell" style="padding:0;">
+      <div class="section-number">05</div>
+      <h2 class="section-title">The Rooms</h2>
+      <div class="section-lead">Four rooms built for Basel. Two more declared as post-Basel direction. Each reads from and writes to the same graph.</div>
+    </div>
+
+    <div class="room-grid">
+      <div class="room-card">
+        <div class="room-number">01</div>
+        <div class="room-name">Sense</div>
+        <div class="room-register">Slow &middot; High-density &middot; Breathing</div>
+        <div class="room-desc">Artworks and practitioners in relational 3D space. Positions pre-computed from graph structure. Conversation fragments surface over the artwork layer. The visitor's first reaction: "I didn't know those two practices were connected."</div>
+        <div class="room-generates">Generates: ambient signal, presence as data</div>
+      </div>
+      <div class="room-card">
+        <div class="room-number">02</div>
+        <div class="room-name">Query</div>
+        <div class="room-register">Sharp &middot; High-contrast &middot; Tension</div>
+        <div class="room-desc">10&ndash;15 provocations pre-generated from real graph tensions. The graph asks, the visitor answers, the answer enters the graph. Your response does not resolve the tension. It adds mass to it.</div>
+        <div class="room-generates">Generates: tension edges, disagreement as mass</div>
+      </div>
+      <div class="room-card">
+        <div class="room-number">03</div>
+        <div class="room-name">Contribute</div>
+        <div class="room-register">Warm &middot; Invitational &middot; Structured</div>
+        <div class="room-desc">Encounter a generative reading of a subgraph. See a gap the graph has identified. Add an artwork, a practitioner, a reaction. The receipt shows what your contribution connected to.</div>
+        <div class="room-generates">Generates: new nodes, language for what resists classification</div>
+      </div>
+      <div class="room-card">
+        <div class="room-number">04</div>
+        <div class="room-name">Connect</div>
+        <div class="room-register">Open &middot; Minimal &middot; Emergent</div>
+        <div class="room-desc">When two practitioners discover shared conceptual territory through the graph, they open a thread &mdash; a named tension anchored to specific nodes. Lightweight identity: name, practice, 2&ndash;3 works.</div>
+        <div class="room-generates">Generates: collaboration edges, emergent social infrastructure</div>
+      </div>
+      <div class="room-card post-basel">
+        <div class="room-number">05</div>
+        <div class="room-name">Experiment</div>
+        <div class="room-register">Sparse &middot; Frontier &middot; Agent-native</div>
+        <div class="room-desc">The graph's sparse region made habitable. Canvas at a real coordinate in embedding space where signal density is lowest. Where practitioner agents live and scout.</div>
+        <div class="room-generates">Generates: new nodes from practice</div>
+      </div>
+      <div class="room-card post-basel">
+        <div class="room-number">06</div>
+        <div class="room-name">Speculate</div>
+        <div class="room-register">Layered &middot; Typographic &middot; Dense</div>
+        <div class="room-desc">The graph's narrative layer made editable. Manifesto assembled from tendency vocabulary, not pre-written. Click a line and you are proposing a vocabulary shift.</div>
+        <div class="room-generates">Generates: vocabulary signal, frontier language</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 06 ARCHITECTURE -->
+<div class="shell">
+  <section class="section reveal" id="architecture">
+    <div class="section-number">06</div>
+    <h2 class="section-title">Architecture</h2>
+    <div class="section-lead">CR-SQLite Matryoshka. Agent-native backend. Every signal carries its reasoning.</div>
+    <div class="accent-line"></div>
+
+    <p class="body-text"><strong>Data layer.</strong> CR-SQLite with CRDT capabilities. Practitioner DB &rarr; Scene DB &rarr; Field DB. Nested, portable, mergeable. "Give me my data" = hand them a file.</p>
+    <p class="body-text"><strong>Processing trace.</strong> Every signal processed through Claude carries what it extracted, rejected, and at what confidence. The pipeline is auditable from day one.</p>
+    <p class="body-text"><strong>Ouroboros defense.</strong> Source origin typing (human_primary through ai_generated). Cycle detection. Convergence testing. Raw practitioner voice is the highest-value signal.</p>
+
+    <h3 style="font-family:'Syne Mono',monospace;font-size:0.56rem;letter-spacing:0.14em;color:var(--mint);text-transform:uppercase;margin:3rem 0 1.2rem;">Typed edges</h3>
+    <table class="edge-table">
+      <thead><tr><th>Edge</th><th>From &rarr; To</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>EMBODIES</td><td>Artwork &rarr; Concept</td><td>The work manifests this concept</td></tr>
+        <tr><td>RESPONDS_TO</td><td>Artwork &rarr; Artwork</td><td>Direct dialogue between works</td></tr>
+        <tr><td>USES_TECHNIQUE</td><td>Artwork &rarr; Concept</td><td>Technique or medium used</td></tr>
+        <tr><td>CREATED_BY</td><td>Artwork &rarr; Practitioner</td><td>Made this work</td></tr>
+        <tr><td>TENSION_WITH</td><td>Concept &rarr; Concept</td><td>Productive tension</td></tr>
+        <tr><td>PRACTICES</td><td>Practitioner &rarr; Concept</td><td>Works with this concept</td></tr>
+        <tr><td>PIONEERED</td><td>Practitioner &rarr; Concept</td><td>Originated or advanced</td></tr>
+        <tr><td>INFLUENCES</td><td>Practitioner &rarr; Practitioner</td><td>Directional influence</td></tr>
+        <tr><td>CONTESTS</td><td>Signal &rarr; Signal</td><td>Explicit disagreement</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-family:'Syne Mono',monospace;font-size:0.56rem;letter-spacing:0.14em;color:var(--mint);text-transform:uppercase;margin:3rem 0 1.2rem;">Interoperability targets</h3>
+    <div class="interop-grid">
+      <div class="interop-card"><div class="interop-name">Getty AAT / ULAN</div><div class="interop-desc">Map concepts and practitioners to Getty identifiers. Makes the graph legible to institutional systems.</div></div>
+      <div class="interop-card"><div class="interop-name">Wikidata</div><div class="interop-desc">Export nodes as Wikidata contributions. Multiplies commons beyond A(DAI)'s own infrastructure.</div></div>
+      <div class="interop-card"><div class="interop-name">C2PA</div><div class="interop-desc">Content Credentials for artwork nodes. Production provenance + meaning provenance.</div></div>
+      <div class="interop-card"><div class="interop-name">IPFS CIDs</div><div class="interop-desc">Content-addressed identifiers for artwork media. Preservation fallback and interoperability layer.</div></div>
+    </div>
+  </section>
+</div>
+
+<!-- 07 SENSING -->
+<div class="shell">
+  <section class="section reveal" id="sensing">
+    <div class="section-number">07</div>
+    <h2 class="section-title">The Sensing Loop</h2>
+    <div class="section-lead">Tidal rhythms. Not continuous, not on-demand. Slowness is the critique.</div>
+    <div class="accent-line"></div>
+</section>
+</div>
+<div class="shell-wide">
+    <div class="tide-grid reveal">
+      <div class="tide-card">
+        <div class="tide-interval">6h</div>
+        <div class="tide-name">The Pulse</div>
+        <div class="tide-desc">Lightweight scan. Metrics. Flag orphans, imbalances, stale nodes, low interpretive diversity. Output: intention gap report.</div>
+      </div>
+      <div class="tide-card">
+        <div class="tide-interval">24h</div>
+        <div class="tide-name">The Survey</div>
+        <div class="tide-desc">Topological analysis. Clusters, bridges, structural holes. Artwork clustering. Contribution patterns. Output: intention observations.</div>
+      </div>
+      <div class="tide-card">
+        <div class="tide-interval">72h</div>
+        <div class="tide-name">The Dream</div>
+        <div class="tide-desc">CLA consolidation. Tendency vocabulary. Counter-signals and contested diagnoses. Artwork tensions into field-level questions. Output: generative prompts.</div>
+      </div>
+    </div>
+</div>
+<div class="shell">
+  <div class="reveal" style="margin-top:3rem;">
+    <p class="body-text"><strong>External calibration.</strong> Quarterly blind spot audits from outside the founding team's network. Coverage gap quantification against festival submissions, platform data, institutional records. Processing model bias comparison: Claude's extractions vs. raw signal content.</p>
+    <p class="body-text"><strong>Anticipatory sensing.</strong> Frontier signal clustering (proto-tendencies). Vocabulary strain detection (concepts forming that the vocabulary cannot name). Institutional leading indicators (open calls vs. graph frontiers).</p>
+    <p class="body-text"><strong>Rapid-response interrupt.</strong> Category-level disruptions escalate from pulse to dream in hours. Manual at launch, automated post-Basel.</p>
+  </div>
+</div>
+
+<!-- 08 PROMPTING -->
+<div class="shell">
+  <section class="section reveal" id="prompting">
+    <div class="section-number">08</div>
+    <h2 class="section-title">Prompting Layer</h2>
+    <div class="section-lead">Dual-register: same observations drive backend analysis and surface as room provocations.</div>
+    <div class="accent-line"></div>
+
+    <div class="tags">
+      <span class="tag">Embodiment</span>
+      <span class="tag">Dialogue</span>
+      <span class="tag">Frontier</span>
+      <span class="tag">Tension</span>
+      <span class="tag">Absence</span>
+      <span class="tag">Myth</span>
+      <span class="tag">Trajectory</span>
+      <span class="tag">Accountability</span>
+    </div>
+
+    <p class="body-text" style="margin-top:2rem;"><strong>Anti-sycophancy.</strong> Divergence between Claude's analysis and practitioner responses is healthy. If they converge suspiciously, the system may be manufacturing intention rather than detecting it.</p>
+    <p class="body-text"><strong>Contestability.</strong> Every prompt names its assumptions and invites disagreement. If no prompt is ever contested, the prompts are too safe.</p>
+  </section>
+</div>
+
+<!-- 09 PARTICIPATION -->
+<div class="shell">
+  <section class="section reveal" id="participation">
+    <div class="section-number">09</div>
+    <h2 class="section-title">Participation</h2>
+    <div class="section-lead">Extend, fork, narrate. At Basel, all modes are text-based.</div>
+    <div class="accent-line"></div>
+
+    <div class="flow">
+      <div class="flow-step"><div class="flow-line"><div class="flow-dot active"></div><div class="flow-connector"></div></div>
+        <div class="flow-content"><div class="flow-label">Extend</div><div class="flow-desc">Add a node, deepen a node, extend the vocabulary. Three levels of structural contribution through the merge boundary.</div></div></div>
+      <div class="flow-step"><div class="flow-line"><div class="flow-dot"></div><div class="flow-connector"></div></div>
+        <div class="flow-content"><div class="flow-label">Fork</div><div class="flow-desc">Take the graph. Run your own garden. Own sensing, own prompts, own dream output. Merge proposals back via CRDT diff.</div></div></div>
+      <div class="flow-step"><div class="flow-line"><div class="flow-dot"></div></div>
+        <div class="flow-content"><div class="flow-label">Narrate</div><div class="flow-desc">Text-based walk through the graph. The system and visitor co-produce a reading. The contribution is the conversation itself. Audio post-Basel.</div></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- 10-12 BASEL + TIMELINE -->
+<div class="shell">
+  <section class="section reveal" id="basel">
+    <div class="section-number">10&ndash;12</div>
+    <h2 class="section-title">Art Basel</h2>
+    <div class="section-lead">June 16&ndash;22, 2026. The encounter demonstrates the thesis, not the full system.</div>
+    <div class="accent-line"></div>
+
+    <p class="body-text"><strong>30&ndash;50 artworks</strong> as first-class nodes with rich edges &mdash; non-negotiable. 3&ndash;5 well-mapped scenes. Live contribution flow. External calibration completed before opening. The <em>output</em> of sensing is what Basel shows. The sensing infrastructure itself is backstage preparation.</p>
+
+    <div class="timeline">
+      <div class="tl-row"><div class="tl-week">W1</div><div><div class="tl-what">Encounter format decided: four rooms. Architecture questions resolved.</div><div class="tl-owner">Iri, Gio</div></div></div>
+      <div class="tl-row"><div class="tl-week">W2&ndash;3</div><div><div class="tl-what">Schema locked: typed edges, provenance, processing traces, interoperability fields. Artwork collection begins.</div><div class="tl-owner">Gio, Iri</div></div></div>
+      <div class="tl-row"><div class="tl-week">W4&ndash;5</div><div><div class="tl-what">Artworks processing into graph. 3&ndash;5 scenes forming. Sense room prototyped with relational 3D positioning.</div><div class="tl-owner">All</div></div></div>
+      <div class="tl-row"><div class="tl-week">W6&ndash;7</div><div><div class="tl-what">Query room functional: provocations from graph tensions. Signal processor with processing traces.</div><div class="tl-owner">Gio, JB</div></div></div>
+      <div class="tl-row"><div class="tl-week">W8&ndash;9</div><div><div class="tl-what">Contribute room. Generative narratives, gap surfacing, receipts. External calibration completed.</div><div class="tl-owner">Iri, Piyush</div></div></div>
+      <div class="tl-row"><div class="tl-week">W10&ndash;11</div><div><div class="tl-what">Connect room prototype. 30+ artworks, 500+ total nodes. Follow-up infrastructure.</div><div class="tl-owner">All</div></div></div>
+      <div class="tl-row"><div class="tl-week">W12</div><div><div class="tl-what">Integration testing. Encounter rehearsal.</div><div class="tl-owner">All</div></div></div>
+      <div class="tl-row"><div class="tl-week highlight">BASEL</div><div><div class="tl-what" style="color:var(--ink);font-weight:600;">June 16&ndash;22</div></div></div>
+    </div>
+
+    <p class="body-text" style="margin-top:2rem;"><strong>The failure test.</strong> If the Sense room has practitioners but no artworks, it is a directory, not an institute. If the graph reflects only the founding team's network and no external calibration has been performed, the system mirrors its founders and calls it "the field."</p>
+  </section>
+</div>
+
+<!-- 13 PRINCIPLES -->
+<div class="shell">
+  <section class="section reveal" id="principles">
+    <div class="section-number">13</div>
+    <h2 class="section-title">Design Principles</h2>
+    <div class="accent-line"></div>
+
+    <div class="principle"><div class="principle-num">01</div><div class="principle-text"><strong>Intention over attention.</strong> Never optimise for engagement.</div></div>
+    <div class="principle"><div class="principle-num">02</div><div class="principle-text"><strong>Gravity, not hierarchy.</strong> Mass through relations, not rank.</div></div>
+    <div class="principle"><div class="principle-num">03</div><div class="principle-text"><strong>Frontier signals are the most valuable signals.</strong> Surface what the system cannot classify.</div></div>
+    <div class="principle"><div class="principle-num">04</div><div class="principle-text"><strong>Governance at the gate.</strong> The data preserves everything. The merge boundary is where judgment lives.</div></div>
+    <div class="principle"><div class="principle-num">05</div><div class="principle-text"><strong>Everything is a prototype</strong> until the field says otherwise.</div></div>
+    <div class="principle"><div class="principle-num">06</div><div class="principle-text"><strong>Provenance of meaning.</strong> Trace the intellectual arc, not just the ownership chain.</div></div>
+    <div class="principle"><div class="principle-num">07</div><div class="principle-text"><strong>Deep time.</strong> Every decision against a 10-year horizon.</div></div>
+    <div class="principle"><div class="principle-num">08</div><div class="principle-text"><strong>The rooms are two-way.</strong> Every interaction reads from and writes to the same graph.</div></div>
+    <div class="principle"><div class="principle-num">09</div><div class="principle-text"><strong>Show the work.</strong> If the reasoning cannot be traced, the system has failed.</div></div>
+    <div class="principle"><div class="principle-num">10</div><div class="principle-text"><strong>Contribution deserves feedback.</strong> When someone gives knowledge, they see what happened with it.</div></div>
+    <div class="principle"><div class="principle-num">11</div><div class="principle-text"><strong>Build bridges, not parallel systems.</strong> Getty, Wikidata, C2PA, IPFS.</div></div>
+    <div class="principle"><div class="principle-num">12</div><div class="principle-text"><strong>Listen first.</strong> The system's first intelligence is recorded conversation.</div></div>
+    <div class="principle"><div class="principle-num">13</div><div class="principle-text"><strong>The art is present.</strong> The system holds works, not just words about works.</div></div>
+    <div class="principle"><div class="principle-num">14</div><div class="principle-text"><strong>Agent-native.</strong> Agents are first-class actors, not bolt-ons.</div></div>
+    <div class="principle"><div class="principle-num">15</div><div class="principle-text"><strong>Coherence over consensus.</strong> Multiple readings coexist. Disagreement is evidence.</div></div>
+    <div class="principle"><div class="principle-num">16</div><div class="principle-text"><strong>Sympoietic, not autopoietic.</strong> The system makes-with, not makes-itself.</div></div>
+    <div class="principle"><div class="principle-num">17</div><div class="principle-text"><strong>The critique is in the architecture.</strong> Tidal rhythms, absence detection, fork rights &mdash; these are the argument.</div></div>
+    <div class="principle"><div class="principle-num">18</div><div class="principle-text"><strong>Scaffolding over delegation.</strong> The practitioner's sensing capacity is the primary intelligence source.</div></div>
+  </section>
+</div>
+
+<!-- 14 GAPS -->
+<div class="shell">
+  <section class="section reveal" id="gaps">
+    <div class="section-number">14</div>
+    <h2 class="section-title">Gap Table</h2>
+    <div class="section-lead">What remains unresolved. v3.1 resolved 6 gaps from field research and added 2 new ones.</div>
+    <div class="accent-line"></div>
+
+    <h3 style="font-family:'Syne Mono',monospace;font-size:0.54rem;letter-spacing:0.14em;color:var(--mint);text-transform:uppercase;margin:2rem 0 1rem;">Resolved in v3.1</h3>
+    <div class="gap-card"><div class="gap-header"><div class="gap-name">Processing pipeline black box</div><div class="gap-status resolved">Resolved</div></div><div class="gap-desc">Processing trace field on every signal. Agent submissions carry extended reasoning trail. &sect;06</div></div>
+    <div class="gap-card"><div class="gap-header"><div class="gap-name">No interoperability targets</div><div class="gap-status resolved">Resolved</div></div><div class="gap-desc">Getty AAT/ULAN, Wikidata, C2PA, IPFS CID fields specified. Schema fields from launch. &sect;06</div></div>
+    <div class="gap-card"><div class="gap-header"><div class="gap-name">Agent trust model (default flow)</div><div class="gap-status resolved">Resolved</div></div><div class="gap-desc">Scaffolding as default. Autonomous submission is a trust-level upgrade. &sect;02, &sect;10</div></div>
+    <div class="gap-card"><div class="gap-header"><div class="gap-name">No external calibration</div><div class="gap-status resolved">Resolved</div></div><div class="gap-desc">Quarterly blind spot audit. Coverage gap quantification. Processing model bias comparison. &sect;07</div></div>
+    <div class="gap-card"><div class="gap-header"><div class="gap-name">No third-party representation policy</div><div class="gap-status resolved">Resolved</div></div><div class="gap-desc">Unconfirmed nodes, notification, self/other visibility rules, pseudonym protection. &sect;03</div></div>
+    <div class="gap-card"><div class="gap-header"><div class="gap-name">Mode 2 has no market theory</div><div class="gap-status resolved">Resolved</div></div><div class="gap-desc">Decision-support use cases: acquisition context, conservation triage, exhibition programming. &sect;02</div></div>
+
+    <h3 style="font-family:'Syne Mono',monospace;font-size:0.54rem;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin:3rem 0 1rem;">Open &mdash; requires decisions</h3>
+    <div class="gap-card"><div class="gap-header"><div class="gap-id">#1</div><div class="gap-status open">Open</div></div><div class="gap-name">Artwork nodes do not exist</div><div class="gap-desc">774 nodes, 0 artworks. The entire prompting layer depends on artwork nodes. Launch blocker.</div></div>
+    <div class="gap-card"><div class="gap-header"><div class="gap-id">#3</div><div class="gap-status open">Open</div></div><div class="gap-name">Geographic intake strategy</div><div class="gap-desc">80% North American/European. External calibration specified but mechanism for diversifying sources unresolved.</div></div>
+    <div class="gap-card"><div class="gap-header"><div class="gap-id">#6</div><div class="gap-status open">Open</div></div><div class="gap-name">Artwork hosting</div><div class="gap-desc">How artwork media is stored and served. Link to external? Host directly? Hybrid?</div></div>
+
+    <h3 style="font-family:'Syne Mono',monospace;font-size:0.54rem;letter-spacing:0.14em;color:var(--sky);text-transform:uppercase;margin:3rem 0 1rem;">New in v3.1</h3>
+    <div class="gap-card"><div class="gap-header"><div class="gap-id">#17</div><div class="gap-status new">New</div></div><div class="gap-name">Artwork hosting at Basel</div><div class="gap-desc">How artwork media renders in Sense room 3D space. Video, interactive works, high-res images need serving strategy.</div></div>
+    <div class="gap-card"><div class="gap-header"><div class="gap-id">#18</div><div class="gap-status new">New</div></div><div class="gap-name">Connect room identity minimum</div><div class="gap-desc">Lightweight practitioner identity fields for collaboration seeding. Too much = surveillance. Too little = anonymous threads.</div></div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer style="padding:4rem 3.2rem 3rem;border-top:1px solid var(--rule);margin-top:4rem;">
+  <div class="shell" style="display:flex;justify-content:space-between;align-items:flex-end;">
+    <div>
+      <div style="font-family:'Instrument Serif',Georgia,serif;font-size:1.4rem;letter-spacing:-0.02em;color:var(--ink);margin-bottom:0.5rem;">A<span style="color:var(--mint);font-style:italic;">(</span>DAI<span style="color:var(--mint);font-style:italic;">)</span></div>
+      <div style="font-family:'Syne',sans-serif;font-size:0.6rem;font-weight:500;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;">A digital arts institute</div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-family:'Syne Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;color:var(--muted);">Seed Document v3.1 &middot; March 2026</div>
+      <div style="font-family:'Syne Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;color:var(--faint);margin-top:0.3rem;">CC-BY-SA 4.0 &middot; Published for testing</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll-triggered reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// Active nav link
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    if (window.scrollY >= section.offsetTop - 200) {
+      current = section.getAttribute('id');
+    }
+  });
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
