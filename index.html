@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A(DAI) Seed Document v3.1 — Field Intelligence Infrastructure</title>
+<title>A(DAI) Seed Document v4.0 — Field Intelligence Infrastructure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Syne:wght@400;500;600;700&family=Syne+Mono&display=swap" rel="stylesheet">
 <style>
-/* ============ THEME — matches digitalartsinstitute.io ============ */
+/* ============ THEME ============ */
 :root {
   --font-display: 'Instrument Serif', Georgia, serif;
   --font-body: 'Syne', sans-serif;
@@ -29,18 +29,6 @@
   --sage-dim: rgba(194,219,191,0.15);
   --sky: #85b0e1;
   --sky-dim: rgba(133,176,225,0.12);
-
-  /* Semantic aliases for existing references */
-  --navy: #1A1A1A;
-  --navy-dim: rgba(26,26,26,0.04);
-  --gold: #7aff9c;
-  --gold-dim: rgba(122,255,156,0.1);
-  --terracotta: #85b0e1;
-  --terracotta-dim: rgba(133,176,225,0.1);
-  --plum: #c2dbbf;
-  --plum-dim: rgba(194,219,191,0.12);
-  --teal: #444444;
-  --teal-dim: rgba(68,68,68,0.06);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -60,95 +48,78 @@
     --sage-dim: rgba(194,219,191,0.08);
     --sky: #85b0e1;
     --sky-dim: rgba(133,176,225,0.08);
-
-    --navy: #e8e8e8;
-    --navy-dim: rgba(232,232,232,0.04);
-    --gold: #7aff9c;
-    --gold-dim: rgba(122,255,156,0.08);
-    --terracotta: #85b0e1;
-    --terracotta-dim: rgba(133,176,225,0.08);
-    --plum: #c2dbbf;
-    --plum-dim: rgba(194,219,191,0.08);
-    --teal: #888888;
-    --teal-dim: rgba(136,136,136,0.06);
   }
 }
 
-/* ============ RESET + BASE ============ */
+/* ============ RESET ============ */
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
-  padding: 2.8rem 3.2rem;
+  font-size: 0.82rem;
+  line-height: 1.85;
   min-height: 100vh;
-  font-size: 0.7rem;
-  line-height: 1.9;
   position: relative;
 }
-/* Noise overlay — matches digitalartsinstitute.io */
+
+/* Noise overlay */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  opacity: 0.045;
+  opacity: 0.04;
   pointer-events: none;
   z-index: 999;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
 
-/* ============ ANIMATION (arrive — matches site) ============ */
-@keyframes arrive {
-  from { opacity:0; transform:translateY(12px); }
-  to { opacity:1; transform:translateY(0); }
-}
-@keyframes pulse {
-  0%,100% { opacity:1; }
-  50% { opacity:0.3; }
-}
-.anim {
-  animation: arrive 1.2s ease both;
-  animation-delay: calc(var(--i,0) * 0.08s);
-}
-.anim-scale {
-  animation: arrive 1.2s ease both;
-  animation-delay: calc(var(--i,0) * 0.08s);
-}
-@media (prefers-reduced-motion:reduce) {
-  *,*::before,*::after {
-    animation-duration:0.01ms !important;
-    animation-delay:0ms !important;
-    transition-duration:0.01ms !important;
-  }
+/* ============ PROGRESS BAR ============ */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: var(--mint);
+  z-index: 1000;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px var(--mint);
 }
 
-/* ============ WRAP + RESPONSIVE NAV ============ */
+/* ============ LAYOUT ============ */
 .wrap {
-  max-width: 1320px;
+  max-width: 1400px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 170px 1fr;
-  gap: 0 40px;
+  grid-template-columns: 220px 1fr;
+  gap: 0 48px;
+  padding: 0 3.2rem;
 }
-.main { min-width:0; }
+.main {
+  min-width: 0;
+  padding: 2.8rem 0 6rem;
+  max-width: 820px;
+}
 
+/* ============ TOC ============ */
 .toc {
   position: sticky;
-  top: 24px;
+  top: 0;
   align-self: start;
-  padding: 14px 0;
+  padding: 2.8rem 0;
   grid-row: 1 / -1;
-  max-height: calc(100dvh - 48px);
+  max-height: 100dvh;
   overflow-y: auto;
 }
 .toc::-webkit-scrollbar { width:3px; }
-.toc::-webkit-scrollbar-thumb { background:var(--surface-elevated); border-radius:2px; }
+.toc::-webkit-scrollbar-thumb { background:var(--border-bright); border-radius:2px; }
 
 .toc-title {
   font-family: var(--font-mono);
-  font-size: 0.48rem;
+  font-size: 0.52rem;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.22em;
@@ -162,49 +133,70 @@ body::after {
   font-size: 11px;
   color: var(--text-dim);
   text-decoration: none;
-  padding: 4px 8px;
-  border-radius: 5px;
+  padding: 4px 10px;
+  border-radius: 4px;
   border-left: 2px solid transparent;
-  transition: all 0.15s;
-  line-height: 1.4;
+  transition: all 0.2s;
+  line-height: 1.5;
   margin-bottom: 1px;
 }
-.toc a:hover { color:var(--mint); background:transparent; }
-.toc a.active { color:var(--text); border-left-color:var(--mint); }
+.toc a:hover { color: var(--mint); }
+.toc a.active {
+  color: var(--text);
+  border-left-color: var(--mint);
+  background: var(--mint-dim);
+}
 
-@media (max-width:1000px) {
-  .wrap { grid-template-columns:1fr; padding-top:0; }
-  body { padding-top:0; }
+/* ============ MOBILE TOC ============ */
+@media (max-width:1060px) {
+  .wrap { grid-template-columns:1fr; padding: 0 1.6rem; }
+  .main { padding-top: 1.2rem; max-width: none; }
   .toc {
-    position:sticky; top:0; z-index:200;
-    max-height:none; display:flex; gap:4px; align-items:center;
-    overflow-x:auto; -webkit-overflow-scrolling:touch;
-    background:var(--bg); border-bottom:1px solid var(--border);
-    padding:10px 0; margin:0 -40px; padding-left:40px; padding-right:40px;
-    grid-row:auto;
+    position: sticky; top: 2px; z-index: 200;
+    max-height: none; display: flex; gap: 4px; align-items: center;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    padding: 10px 0; margin: 0; grid-row: auto;
   }
   .toc::-webkit-scrollbar { display:none; }
   .toc-title { display:none; }
   .toc a {
-    white-space:nowrap; flex-shrink:0;
-    border-left:none; border-bottom:2px solid transparent;
-    border-radius:4px 4px 0 0; padding:6px 10px; font-size:10px;
+    white-space: nowrap; flex-shrink: 0;
+    border-left: none; border-bottom: 2px solid transparent;
+    border-radius: 4px 4px 0 0; padding: 6px 10px; font-size: 10px;
   }
-  .toc a.active { border-left:none; border-bottom-color:var(--mint); background:var(--surface); }
-  .main { padding-top:20px; }
-  .sec-head { scroll-margin-top:52px; }
+  .toc a.active { border-left:none; border-bottom-color:var(--mint); background:var(--mint-dim); }
 }
 
-/* ============ TYPOGRAPHY — matches site ============ */
+/* ============ ANIMATIONS ============ */
+@keyframes arrive {
+  from { opacity:0; transform:translateY(16px); }
+  to { opacity:1; transform:translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion:reduce) {
+  .reveal { opacity:1; transform:none; transition:none; }
+}
+
+/* ============ TYPOGRAPHY ============ */
 h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.1;
   margin-bottom: 0.5rem;
   text-wrap: balance;
   color: var(--text);
+  animation: arrive 1s ease both;
 }
 h1 .mint { color: var(--mint); font-style: italic; }
 .subtitle {
@@ -213,18 +205,21 @@ h1 .mint { color: var(--mint); font-style: italic; }
   color: var(--text-dim);
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.6rem;
+  animation: arrive 1s ease 0.1s both;
 }
 .lead {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 0.8rem;
+  font-size: 0.88rem;
   line-height: 1.7;
   color: var(--text-dim);
   max-width: 680px;
   margin-bottom: 2.8rem;
+  animation: arrive 1s ease 0.2s both;
 }
 
+/* Section headers */
 .sec-head {
   font-family: var(--font-mono);
   font-size: 0.56rem;
@@ -234,55 +229,83 @@ h1 .mint { color: var(--mint); font-style: italic; }
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 3rem;
+  margin-top: 3.5rem;
   margin-bottom: 1.2rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border);
   color: var(--text-dim);
+  scroll-margin-top: 24px;
 }
 .sec-head .dot {
-  width: 5px; height: 5px; border-radius: 50%; display: inline-block;
-  box-shadow: 0 0 6px currentColor;
+  width: 6px; height: 6px; border-radius: 50%; display: inline-block;
+  box-shadow: 0 0 8px currentColor;
 }
 h2 {
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
   font-weight: 400;
   letter-spacing: -0.02em;
   margin-bottom: 1rem;
   color: var(--text);
 }
+h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-top: 2rem;
+  margin-bottom: 0.6rem;
+  color: var(--text);
+}
 
-/* ============ CARDS — minimal, site-matched ============ */
-.ve-card {
+p {
+  margin-bottom: 1rem;
+  color: var(--text-dim);
+  max-width: 72ch;
+}
+p strong { color: var(--text); font-weight: 600; }
+
+a { color: var(--sky); text-decoration-color: var(--sky-dim); }
+a:hover { text-decoration-color: var(--sky); }
+
+/* ============ CALLOUT CARD ============ */
+.callout {
+  background: var(--sage-dim);
+  border: 1px solid var(--sage);
+  border-left: 3px solid var(--sage);
+  border-radius: 4px;
+  padding: 1.2rem 1.6rem;
+  margin-bottom: 2.4rem;
+  animation: arrive 1s ease 0.3s both;
+}
+.callout p {
+  font-size: 0.78rem;
+  line-height: 1.8;
+  color: var(--text-dim);
+  margin-bottom: 0.6rem;
+}
+.callout p:last-child { margin-bottom: 0; }
+.callout strong { color: var(--text); }
+
+/* ============ CARDS ============ */
+.card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 1.2rem 1.4rem;
-  min-width: 0;
-  transition: background 0.2s, box-shadow 0.25s, transform 0.25s;
+  border-radius: 4px;
+  padding: 1.4rem 1.6rem;
+  transition: background 0.2s, box-shadow 0.3s, transform 0.3s;
 }
-.ve-card:hover {
+.card:hover {
   background: var(--surface2);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-  transform: scale(1.01);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+  transform: translateY(-2px);
 }
-.ve-card--hero {
-  background: var(--surface);
-  border-color: var(--border);
-  padding: 1.6rem 2rem;
-}
-.ve-card--recessed {
-  background: var(--surface2);
-}
-
 .card-label {
   font-family: var(--font-mono);
-  font-size: 0.56rem;
+  font-size: 0.52rem;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.22em;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -290,1751 +313,1670 @@ h2 {
 }
 .card-title {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.35rem;
   font-weight: 400;
   margin-bottom: 0.3rem;
   color: var(--text);
 }
 .card-desc {
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   color: var(--text-dim);
-  line-height: 1.9;
+  line-height: 1.85;
 }
 .card-desc code {
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size: 0.68rem;
   background: var(--mint-dim);
   color: var(--text);
-  padding: 1px 5px;
-  border-radius: 2px;
+  padding: 1px 6px;
+  border-radius: 3px;
 }
 
-/* ============ GRIDS ============ */
-.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+/* Grids */
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:1.4rem; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:1.4rem; }
 @media (max-width:768px) {
   .grid-2, .grid-3 { grid-template-columns:1fr; }
 }
 
-/* ============ SPLIT PANEL ============ */
+/* ============ COLLAPSIBLE SECTIONS ============ */
+.collapsible {
+  margin-top: 1.2rem;
+  margin-bottom: 1.4rem;
+}
+.collapsible-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--text);
+  padding: 0.5rem 0;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  transition: color 0.2s;
+}
+.collapsible-toggle:hover { color: var(--mint); }
+.collapsible-toggle .chevron {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--border-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  transition: transform 0.3s, background 0.2s;
+  flex-shrink: 0;
+  color: var(--text-dim);
+}
+.collapsible.open .collapsible-toggle .chevron {
+  transform: rotate(90deg);
+  background: var(--mint-dim);
+  color: var(--text);
+}
+.collapsible-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+.collapsible.open .collapsible-body {
+  max-height: 4000px;
+  opacity: 1;
+}
+.collapsible-inner {
+  padding: 0.4rem 0 0.8rem 26px;
+}
+
+/* ============ TABLES ============ */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin-bottom: 1.4rem;
+}
+.styled-table thead th {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--text-dim);
+  text-align: left;
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--border-bright);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+}
+.styled-table tbody td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text-dim);
+}
+.styled-table tbody td strong { color: var(--text); }
+.styled-table tbody tr:nth-child(even) td {
+  background: var(--surface2);
+}
+.styled-table tbody tr:hover td {
+  background: var(--mint-dim);
+}
+.edge-type-code {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+.edge-dir {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-dim);
+}
+
+/* ============ CODE BLOCKS ============ */
+pre {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.2rem 1.4rem;
+  overflow-x: auto;
+  margin-bottom: 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+code {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  background: var(--mint-dim);
+  padding: 1px 5px;
+  border-radius: 3px;
+  color: var(--text);
+}
+pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* ============ LISTS ============ */
+ul, ol {
+  padding-left: 1.4rem;
+  margin-bottom: 1rem;
+  color: var(--text-dim);
+}
+li {
+  margin-bottom: 0.4rem;
+  line-height: 1.8;
+}
+li strong { color: var(--text); }
+li code { font-size: 0.68rem; }
+
+/* Numbered principles */
+.principles-list {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: principle;
+}
+.principles-list li {
+  counter-increment: principle;
+  padding: 0.5rem 0 0.5rem 2.4rem;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.principles-list li::before {
+  content: counter(principle, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--mint);
+  letter-spacing: 0.05em;
+}
+
+/* ============ LAYER STEPS (Three-Layer Prototype) ============ */
+.layer-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  margin: 1.4rem 0 2rem;
+}
+.layer-steps::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--mint), var(--sky), var(--sage));
+  border-radius: 1px;
+}
+.layer-step {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 0 16px;
+  position: relative;
+}
+.layer-num {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 1.4rem;
+  position: relative;
+  z-index: 2;
+}
+.layer-num span {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 600;
+  border: 2px solid var(--border-bright);
+  background: var(--surface);
+  color: var(--text);
+}
+.layer-step:nth-child(1) .layer-num span { border-color: var(--mint); color: var(--mint); }
+.layer-step:nth-child(2) .layer-num span { border-color: var(--sky); color: var(--sky); }
+.layer-step:nth-child(3) .layer-num span { border-color: var(--sage); color: var(--sage); }
+.layer-step:nth-child(4) .layer-num span { border-color: var(--text-dim); color: var(--text-dim); }
+
+.layer-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.4rem 1.6rem;
+  margin: 0.8rem 0;
+  transition: background 0.2s, box-shadow 0.3s;
+}
+.layer-card:hover {
+  background: var(--surface2);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.04);
+}
+.layer-step:nth-child(1) .layer-card { border-top: 2px solid var(--mint); }
+.layer-step:nth-child(2) .layer-card { border-top: 2px solid var(--sky); }
+.layer-step:nth-child(3) .layer-card { border-top: 2px solid var(--sage); }
+.layer-step:nth-child(4) .layer-card { border-top: 2px solid var(--text-dim); }
+
+.layer-card h3 {
+  margin-top: 0;
+  font-size: 1.3rem;
+}
+.layer-card p {
+  font-size: 0.78rem;
+}
+
+/* ============ SPLIT / TWO-COLUMN ============ */
 .split {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  border-radius: 2px;
+  border-radius: 4px;
   overflow: hidden;
   border: 1px solid var(--border);
+  margin-bottom: 1.4rem;
 }
-.split-left, .split-right {
-  padding: 24px 28px;
-}
-.split-left {
-  background: var(--navy-dim);
-  border-right: 1px solid var(--border);
-}
-.split-right {
-  background: var(--gold-dim);
-}
+.split-left, .split-right { padding: 1.2rem 1.4rem; }
+.split-left { background: var(--surface2); border-right: 1px solid var(--border); }
+.split-right { background: var(--mint-dim); }
 .split-label {
   font-family: var(--font-mono);
-  font-size: 0.56rem;
-  font-weight: 400;
+  font-size: 0.52rem;
   text-transform: uppercase;
   letter-spacing: 0.22em;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
+  color: var(--text-dim);
 }
 .split-item {
-  font-size: 0.7rem;
-  line-height: 1.9;
-  padding: 4px 0;
+  font-size: 0.78rem;
+  line-height: 1.8;
+  padding: 3px 0 3px 14px;
   color: var(--text-dim);
-  padding-left: 14px;
   position: relative;
 }
 .split-item::before {
-  content: ''; position: absolute; left: 0; top: 10px;
-  width: 6px; height: 6px; border-radius: 50%;
+  content: ''; position: absolute; left: 0; top: 11px;
+  width: 5px; height: 5px; border-radius: 50%;
 }
-.split-left .split-item::before { background: var(--navy); }
-.split-right .split-item::before { background: var(--gold); }
+.split-left .split-item::before { background: var(--text-dim); }
+.split-right .split-item::before { background: var(--mint); }
 @media (max-width:768px) {
   .split { grid-template-columns:1fr; }
   .split-left { border-right:none; border-bottom:1px solid var(--border); }
 }
 
-/* ============ ROOMS GRID ============ */
-.rooms-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-}
-.room-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 1.2rem 1.4rem;
-  border-top: 2px solid var(--border);
-  transition: background 0.2s, box-shadow 0.25s, transform 0.25s;
-}
-.room-card:hover {
-  background: var(--surface2);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-  transform: scale(1.02);
-}
-.room-num {
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  font-weight: 400;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  margin-bottom: 0.3rem;
-}
-.room-name {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  margin-bottom: 0.2rem;
-  color: var(--text);
-}
-.room-vibe {
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  color: var(--text-dim);
-  margin-bottom: 0.6rem;
-  letter-spacing: 0.1em;
-}
-.room-desc {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  line-height: 1.9;
-  margin-bottom: 0.6rem;
-}
-.room-generates {
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  color: var(--text-dim);
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--border);
-  letter-spacing: 0.1em;
-}
-.room-generates strong { color: var(--text); }
-
-/* ============ TIDAL TIMELINE ============ */
-.tidal {
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 0;
+/* ============ TIMELINE (Changelog) ============ */
+.timeline {
   position: relative;
+  padding-left: 28px;
+  margin: 1.4rem 0;
 }
-.tidal::before {
+.timeline::before {
   content: '';
   position: absolute;
-  left: 40px;
+  left: 8px;
   top: 0; bottom: 0;
   width: 2px;
   background: var(--border-bright);
 }
-.tidal-marker {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.timeline-entry {
   position: relative;
-  z-index: 2;
+  margin-bottom: 2rem;
 }
-.tidal-dot {
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  font-weight: 400;
-  color: var(--text);
-  border: 1.5px solid var(--border-bright);
-  background: var(--surface);
-}
-.tidal-content {
-  padding: 12px 0 36px 20px;
-}
-.tidal-name {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  margin-bottom: 0.2rem;
-  color: var(--text);
-}
-.tidal-sub {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  line-height: 1.9;
-}
-
-/* ============ EDGE TABLE ============ */
-.edge-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.7rem;
-}
-.edge-table thead th {
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: var(--text-dim);
-  text-align: left;
-  padding: 10px 14px;
-  border-bottom: 2px solid var(--border-bright);
-  position: sticky;
-  top: 0;
-  background: var(--surface);
-}
-.edge-table tbody td {
-  padding: 8px 14px;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-}
-.edge-table tbody tr:nth-child(even) td {
-  background: var(--surface2);
-}
-.edge-table tbody tr:hover td {
-  background: var(--gold-dim);
-}
-.edge-type {
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-}
-.edge-dir {
-  font-family: var(--font-mono);
-  font-size: 0.58rem;
-  color: var(--text-dim);
-}
-
-/* ============ TIMELINE ============ */
-/* ============ WORKSTREAM SWIM LANES ============ */
-.ws-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  position: relative;
-}
-.ws-header {
-  display: grid;
-  grid-template-columns: 2.4rem 1fr;
-  gap: 0;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 0.3rem;
-}
-.ws-weeks {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1px;
-}
-.ws-week-label {
-  font-family: var(--font-mono);
-  font-size: 0.42rem;
-  color: var(--text-dim);
-  text-align: center;
-  letter-spacing: 0.1em;
-  opacity: 0.6;
-}
-.ws-row {
-  display: grid;
-  grid-template-columns: 2.4rem 1fr;
-  gap: 0;
-  align-items: center;
-  min-height: 2.2rem;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.2s;
-}
-.ws-row:hover { background: var(--surface2); }
-.ws-row--sub {
-  min-height: 1.6rem;
-}
-.ws-row--sub .ws-info { padding-left: 0.8rem; }
-.ws-num {
-  font-family: var(--font-mono);
-  font-size: 0.48rem;
-  color: var(--text-dim);
-  letter-spacing: 0.1em;
-  text-align: center;
-  align-self: center;
-}
-.ws-info {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.3rem 0;
-}
-.ws-name {
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 500;
-  color: var(--text);
-  white-space: nowrap;
-  min-width: 10rem;
-}
-.ws-row--sub .ws-name {
-  font-size: 0.58rem;
-  font-weight: 400;
-  color: var(--text-dim);
-}
-.ws-owner {
-  font-family: var(--font-mono);
-  font-size: 0.44rem;
-  color: var(--text-dim);
-  letter-spacing: 0.1em;
-  white-space: nowrap;
-  opacity: 0.7;
-}
-.ws-bar-track {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 1px;
-  flex: 1;
-  height: 6px;
-  min-width: 0;
-}
-.ws-bar-cell {
-  height: 100%;
-  border-radius: 1px;
-}
-.ws-bar-cell--active { opacity: 0.7; }
-.ws-bar-cell--blocked {
-  opacity: 0.3;
-  background-image: repeating-linear-gradient(
-    -45deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px
-  );
-}
-/* Workstream colors */
-.ws-color-1 .ws-bar-cell--active { background: var(--mint); }
-.ws-color-2 .ws-bar-cell--active { background: var(--sky); }
-.ws-color-2 .ws-bar-cell--blocked { background: var(--sky); }
-.ws-color-3 .ws-bar-cell--active { background: var(--sage); }
-.ws-color-4 .ws-bar-cell--active { background: #c2a8d9; }
-.ws-color-5 .ws-bar-cell--active { background: var(--mint); }
-.ws-color-6 .ws-bar-cell--active { background: var(--sky); }
-.ws-color-7 .ws-bar-cell--active { background: var(--sage); }
-/* Sub-track bars thinner */
-.ws-row--sub .ws-bar-track { height: 3px; }
-/* Basel marker */
-.ws-basel {
-  grid-column: 12;
-  font-family: var(--font-mono);
-  font-size: 0.42rem;
-  color: var(--mint);
-  text-align: center;
-  letter-spacing: 0.1em;
-}
-/* Gap discuss status */
-.gap-discuss {
-  background: rgba(200,180,100,0.12);
-  color: #998a4a;
-}
-@media (prefers-color-scheme: dark) {
-  .gap-discuss { background: rgba(200,180,100,0.08); color: #c4b06a; }
-}
-@media (max-width:768px) {
-  .ws-bar-track, .ws-header .ws-weeks { display: none; }
-  .ws-row { grid-template-columns: 2rem 1fr; }
-  .ws-header { display: none; }
-}
-
-/* ============ PRINCIPLES GRID ============ */
-.principles {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 10px;
-}
-.principle {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 0.6rem 1rem;
-  font-size: 0.7rem;
-  display: flex;
-  gap: 0.6rem;
-  align-items: baseline;
-}
-.principle-num {
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  font-weight: 400;
-  color: var(--mint);
-  flex-shrink: 0;
-  width: 20px;
-  letter-spacing: 0.05em;
-}
-
-/* ============ METRICS PILLS ============ */
-.metrics {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-.metric-pill {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 0.8rem 1.2rem;
-  flex: 1;
-  min-width: 140px;
-}
-.metric-name {
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: var(--text-dim);
-  margin-bottom: 0.2rem;
-}
-.metric-desc {
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  line-height: 1.7;
-}
-
-/* ============ CALLOUT ============ */
-.callout {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-left: 2px solid var(--mint);
-  border-radius: 0 2px 2px 0;
-  padding: 1rem 1.2rem;
-  font-size: 0.7rem;
-  line-height: 1.9;
-  color: var(--text-dim);
-}
-.callout strong { color: var(--text); }
-
-/* ============ MERMAID ============ */
-.diagram-shell { position: relative; }
-.diagram-shell__hint {
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  color: var(--text-dim);
-  margin-bottom: 0.4rem;
-  opacity: 0.5;
-  letter-spacing: 0.05em;
-}
-.mermaid-wrap {
-  position: relative;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 2rem 1.5rem;
-  overflow: auto;
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-  cursor: grab;
-}
-.mermaid-wrap.is-panning { cursor: grabbing; user-select: none; }
-.zoom-controls {
-  position: absolute;
-  top: 8px; right: 8px;
-  display: flex; gap: 2px; z-index: 10;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 2px;
-}
-.zoom-controls button {
-  width: 28px; height: 28px;
-  border: none; background: transparent;
-  color: var(--text-dim);
-  font-family: var(--font-mono);
-  font-size: 14px;
-  cursor: pointer;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s, color 0.15s;
-}
-.zoom-controls button:hover { background: var(--border); color: var(--text); }
-.zoom-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-dim);
-  padding: 0 6px;
-  white-space: nowrap;
-}
-.mermaid-viewport {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  min-height: 300px;
-}
-.mermaid-canvas {
-  position: absolute;
-  top: 0; left: 0;
-}
-.mermaid .nodeLabel {
-  font-family: var(--font-body) !important;
-  font-size: 0.7rem !important;
-  color: var(--text) !important;
-}
-.mermaid .edgeLabel {
-  font-family: var(--font-mono) !important;
-  font-size: 0.56rem !important;
-  color: var(--text-dim) !important;
-  background-color: var(--bg) !important;
-}
-.mermaid .edgeLabel rect { fill: var(--bg) !important; }
-.mermaid .node rect,
-.mermaid .node circle,
-.mermaid .node polygon { stroke-width: 1.5px !important; }
-.mermaid .edge-pattern-solid { stroke-width: 1.5px !important; }
-
-/* ============ GAP TABLE ============ */
-.gap-item {
-  display: flex;
-  gap: 0.6rem;
-  align-items: baseline;
-  padding: 0.4rem 0;
-  border-bottom: 1px solid var(--border);
-}
-.gap-id {
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  font-weight: 400;
-  flex-shrink: 0;
-  width: 24px;
-  letter-spacing: 0.05em;
-}
-.gap-status {
-  font-family: var(--font-mono);
-  font-size: 0.44rem;
-  font-weight: 400;
-  padding: 2px 6px;
-  border-radius: 2px;
-  flex-shrink: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-}
-.gap-resolved { background: var(--mint-dim); color: var(--text-dim); }
-.gap-discuss { background: var(--sky-dim); color: var(--text-dim); }
-.gap-open { background: var(--sky-dim); color: var(--text-dim); }
-.gap-new { background: var(--sage-dim); color: var(--text-dim); }
-.gap-text { font-size: 0.65rem; color: var(--text-dim); }
-
-/* ============ GRAVITATIONAL GRAPH ============ */
-.grav-graph {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 2rem 2rem 1.4rem;
-  margin-bottom: 1.4rem;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-areas:
-    "p a c s";
-  gap: 1.2rem;
-}
-.grav-node {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  z-index: 2;
-  position: relative;
-}
-.grav-node__circle {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 400;
-  border: 1.5px solid var(--border-bright);
-  background: transparent;
-  transition: background 0.25s, border-color 0.25s;
-}
-.grav-node:hover .grav-node__circle {
-  background: rgba(26,26,26,0.04);
-}
-.grav-node__name {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  font-weight: 500;
-}
-.grav-node__self {
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  color: var(--text-dim);
-  padding: 2px 8px;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  opacity: 0.6;
-  white-space: nowrap;
-  letter-spacing: 0.1em;
-}
-.grav-node--practitioner .grav-node__circle {
-  border-color: var(--mint);
-  color: var(--mint);
-}
-.grav-node--artwork .grav-node__circle {
-  border-color: var(--sky);
-  color: var(--sky);
-}
-.grav-node--concept .grav-node__circle {
-  border-color: var(--sage);
-  color: var(--sage);
-}
-.grav-node--signal .grav-node__circle {
-  border-color: var(--text-dim);
-  color: var(--text-dim);
-}
-
-.grav-note {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  text-align: center;
-  padding-top: 0.8rem;
-  border-top: 1px solid var(--border);
-}
-
-@media (max-width:600px) {
-  .grav-graph {
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "p a"
-      "c s";
-    padding: 24px 16px;
-  }
-  .grav-node__circle { width: 56px; height: 56px; font-size: 22px; }
-}
-
-/* ============ IMPL NESTING ============ */
-.impl-nest {
-  border-left: 2px solid var(--mint);
-  padding-left: 1.4rem;
-  margin-left: 0.5rem;
-  margin-top: 1.4rem;
-}
-.impl-label {
-  font-family: var(--font-mono);
-  font-size: 0.5rem;
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  color: var(--mint);
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.impl-label::before {
+.timeline-entry::before {
   content: '';
-  width: 10px; height: 1px;
-  background: var(--mint);
-  margin-left: -1.9rem;
-}
-.schema-card {
+  position: absolute;
+  left: -24px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--mint);
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 0.8rem 1rem;
-  min-width: 0;
 }
-.schema-name {
+.timeline-entry.minor::before {
+  border-color: var(--border-bright);
+  width: 8px;
+  height: 8px;
+  left: -23px;
+  top: 7px;
+}
+.timeline-version {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 400;
-  margin-bottom: 0.3rem;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  margin-bottom: 0.2rem;
 }
-.schema-badge {
+.timeline-date {
   font-family: var(--font-mono);
-  font-size: 0.44rem;
-  font-weight: 400;
-  padding: 1px 5px;
-  border-radius: 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
+  font-size: 0.5rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.5rem;
 }
-.badge-crr { background: var(--sage-dim); color: var(--sage); }
-.badge-local { background: var(--terracotta-dim); color: var(--terracotta); }
-.schema-cols {
-  font-size: 0.56rem;
+.timeline-body {
+  font-size: 0.78rem;
   color: var(--text-dim);
   line-height: 1.8;
-  font-family: var(--font-mono);
-  letter-spacing: 0.02em;
 }
-.schema-cols .pk { color: var(--mint); }
-.schema-cols .fk { color: var(--sky); }
+.timeline-body strong { color: var(--text); }
 
-.trust-flow {
+/* ============ META BAR ============ */
+.meta-bar {
   display: flex;
-  align-items: center;
-  gap: 0;
   flex-wrap: wrap;
+  gap: 1.2rem 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+  animation: arrive 1s ease 0.15s both;
 }
-.trust-step {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 0.6rem 0.8rem;
-  text-align: center;
-  min-width: 80px;
-  flex-shrink: 0;
-}
-.trust-step-name {
-  font-size: 0.7rem;
-  font-weight: 500;
-  margin-bottom: 0.1rem;
-}
-.trust-step-detail {
-  font-size: 0.5rem;
+.meta-item {
+  font-size: 0.72rem;
   color: var(--text-dim);
-  font-family: var(--font-mono);
-  letter-spacing: 0.05em;
 }
-.trust-arrow {
-  color: var(--border-bright);
-  font-size: 16px;
-  padding: 0 4px;
-  flex-shrink: 0;
-}
-
-.impl-status {
+.meta-item span {
   font-family: var(--font-mono);
-  font-size: 0.48rem;
-  font-weight: 400;
-  padding: 2px 6px;
-  border-radius: 2px;
+  font-size: 0.52rem;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
+  display: block;
+  color: var(--text-dim);
+  margin-bottom: 2px;
+  opacity: 0.7;
 }
-.status-live { background: var(--mint-dim); color: var(--text); }
-.status-designed { background: var(--sky-dim); color: var(--text-dim); }
-.status-planned { background: var(--sage-dim); color: var(--text-dim); }
 
-.file-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
+/* ============ QUALITY TESTS ============ */
+.quality-list {
+  list-style: none;
+  padding: 0;
 }
-.file-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 0.7rem 0.9rem;
-  border-left: 2px solid var(--border);
+.quality-list li {
+  padding: 0.6rem 0 0.6rem 2rem;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--text-dim);
 }
-.file-name {
+.quality-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 2px solid #ff6b6b;
+  background: rgba(255,107,107,0.1);
+}
+.quality-list li strong { color: var(--text); }
+
+/* ============ SIGNAL FLOW DIAGRAM ============ */
+.signal-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 1.4rem 0;
+}
+.signal-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 0.8rem 0;
+  border-left: 2px solid var(--border-bright);
+  padding-left: 16px;
+  position: relative;
+}
+.signal-step::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mint);
+}
+.signal-step-label {
   font-family: var(--font-mono);
-  font-size: 0.58rem;
-  font-weight: 400;
-  margin-bottom: 0.2rem;
-  letter-spacing: 0.02em;
+  font-size: 0.56rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text);
+  min-width: 160px;
+  flex-shrink: 0;
+  padding-top: 2px;
 }
-.file-desc {
-  font-size: 0.6rem;
+.signal-step-desc {
+  font-size: 0.76rem;
   color: var(--text-dim);
   line-height: 1.7;
 }
-.file-lines {
-  font-family: var(--font-mono);
-  font-size: 0.48rem;
-  color: var(--text-dim);
-  margin-top: 0.2rem;
-  letter-spacing: 0.1em;
-}
 
-.kpi-row {
+/* ============ MATRYOSHKA DIAGRAM ============ */
+.matryoshka {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin: 1.4rem 0 2rem;
 }
-.kpi {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: 1rem 1.2rem;
+.matryoshka-layer {
+  border: 1px solid var(--border-bright);
+  border-radius: 8px;
+  padding: 1rem 1.6rem;
   text-align: center;
-  flex: 1;
-  min-width: 100px;
+  transition: background 0.2s;
 }
-.kpi-num {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  color: var(--text);
-  line-height: 1;
-  margin-bottom: 0.3rem;
+.matryoshka-layer:hover { background: var(--surface2); }
+.matryoshka-layer:nth-child(1) {
+  width: 100%;
+  border-color: var(--sage);
+  background: var(--sage-dim);
+  padding-bottom: 0;
 }
-.kpi-label {
+.matryoshka-layer:nth-child(2) {
+  width: 82%;
+  margin-top: -0.5rem;
+  border-color: var(--sky);
+  background: var(--sky-dim);
+  padding-bottom: 0;
+}
+.matryoshka-layer:nth-child(3) {
+  width: 60%;
+  margin-top: -0.5rem;
+  border-color: var(--mint);
+  background: var(--mint-dim);
+}
+.matryoshka-label {
   font-family: var(--font-mono);
-  font-size: 0.48rem;
-  font-weight: 400;
+  font-size: 0.56rem;
   text-transform: uppercase;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.15em;
   color: var(--text-dim);
 }
+.matryoshka-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--text);
+  margin: 0.1rem 0 0.6rem;
+}
 
-/* ============ RESPONSIVE ============ */
-@media (max-width:768px) {
-  body { padding:1.6rem; }
-  h1 { font-size:2rem; }
-  .rooms-grid { grid-template-columns:1fr; }
-  .tidal { grid-template-columns:60px 1fr; }
-  .tidal::before { left:30px; }
-  .timeline-grid { grid-template-columns:1fr; }
-  .metrics { flex-direction:column; }
-  .impl-nest { padding-left:16px; margin-left:4px; }
-  .file-grid { grid-template-columns:1fr; }
-  .trust-flow { gap:6px; }
-  .trust-arrow { display:none; }
-  .kpi-row { gap:8px; }
-  .kpi { min-width:60px; padding:10px 12px; }
-  .kpi-num { font-size:22px; }
+/* ============ TENDENCY AXES ============ */
+.axes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 1rem 0 1.4rem;
+}
+.axis-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.5rem 1rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.76rem;
+  color: var(--text-dim);
+}
+.axis-item .arrow {
+  font-family: var(--font-mono);
+  color: var(--mint);
+  font-size: 0.7rem;
+}
+@media (max-width:600px) { .axes-grid { grid-template-columns: 1fr; } }
+
+/* ============ DOC HIERARCHY ============ */
+.doc-list {
+  list-style: none;
+  padding: 0;
+  counter-reset: doc;
+}
+.doc-list li {
+  counter-increment: doc;
+  padding: 0.6rem 0 0.6rem 2.2rem;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+.doc-list li::before {
+  content: counter(doc);
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--mint);
+  width: 1.6rem;
+  text-align: center;
+  padding-top: 2px;
+}
+
+/* ============ PRINT ============ */
+@media print {
+  .toc, .progress-bar { display: none !important; }
+  .wrap { grid-template-columns: 1fr; }
+  .main { max-width: none; padding: 0; }
+  body { font-size: 10pt; padding: 1cm; }
+  .collapsible-body { max-height: none !important; opacity: 1 !important; }
+  .card, .layer-card { break-inside: avoid; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  h1 { font-size: 24pt; }
 }
 </style>
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar"></div>
+
 <div class="wrap">
 
+<!-- ============ TOC ============ -->
 <nav class="toc" id="toc">
-  <div class="toc-title">Seed Doc</div>
-  <a href="#s1">Vision</a>
-  <a href="#s2">Attention vs Intention</a>
-  <a href="#s3">Strategy</a>
-  <a href="#s4">Gravitational Model</a>
-  <a href="#s4b">Implementation</a>
-  <a href="#s5">The Rooms</a>
-  <a href="#s6">Sensing Loop</a>
-  <a href="#s7">Architecture</a>
-  <a href="#s8">Basel Timeline</a>
-  <a href="#s9">Principles</a>
-  <a href="#s10">Gap Table</a>
+  <div class="toc-title">Contents</div>
+  <a href="#vision">01 Vision</a>
+  <a href="#principles">02 Principles</a>
+  <a href="#strategy">03 Strategy</a>
+  <a href="#prototype">04 Three-Layer Prototype</a>
+  <a href="#concept">05 Concept</a>
+  <a href="#architecture">06 Architecture</a>
+  <a href="#merge">07 Merge Boundary</a>
+  <a href="#sensing">08 Sensing &amp; Narrative</a>
+  <a href="#risk">09 Agentic Risk Map</a>
+  <a href="#governance">10 Governance</a>
+  <a href="#skills">11 Skills Files</a>
+  <a href="#state">12 Current State</a>
+  <a href="#quality">13 Quality Tests</a>
+  <a href="#hierarchy">14 Doc Hierarchy</a>
+  <a href="#stack">15 Stack</a>
+  <a href="#team">16 Team</a>
+  <a href="#changelog">Changelog</a>
 </nav>
 
+<!-- ============ MAIN ============ -->
 <div class="main">
 
-<!-- ===== HERO ===== -->
-<h1 class="anim" style="--i:0">A<span class="mint">(</span>DAI<span class="mint">)</span></h1>
-<p class="subtitle anim" style="--i:1">seed document v3.1 &mdash; digital arts field intelligence infrastructure</p>
-<p class="lead anim" style="--i:2">"An institution is a persistent pattern of intention." A 10-year knowledge commons for digital arts practitioners&mdash;producing a reading of the field, never the reading.</p>
+<!-- Header -->
+<h1>A(<span class="mint">DAI</span>)</h1>
+<p class="subtitle">Seed Document</p>
+<p class="lead">Field intelligence infrastructure for the digital arts. A knowledge commons and semantic graph where practitioner intelligence, lived experience, artworks, and field signals accumulate into something the field can query, traverse, challenge, and build on.</p>
 
-<div class="anim" style="--i:3; display:flex; gap:16px; flex-wrap:wrap; margin-bottom:40px;">
-  <div class="metric-pill">
-    <div class="metric-name">License</div>
-    <div class="metric-desc">CC-BY-SA 4.0</div>
-  </div>
-  <div class="metric-pill">
-    <div class="metric-name">Research</div>
-    <div class="metric-desc">94 items field investigation</div>
-  </div>
-  <div class="metric-pill">
-    <div class="metric-name">Horizon</div>
-    <div class="metric-desc">10-year lifespan</div>
-  </div>
-  <div class="metric-pill">
-    <div class="metric-name">Launch</div>
-    <div class="metric-desc">Art Basel, June 2026</div>
+<div class="meta-bar">
+  <div class="meta-item"><span>Version</span>4.0</div>
+  <div class="meta-item"><span>Date</span>April 2026</div>
+  <div class="meta-item"><span>Authors</span>Iri, JB, Piyush, Gio</div>
+  <div class="meta-item"><span>Status</span>Active seed document</div>
+  <div class="meta-item"><span>Licence</span>CC-BY-SA 4.0</div>
+</div>
+
+<!-- Callout -->
+<div class="callout reveal">
+  <p>This document supersedes v3.1. The four-room Basel model is replaced by a three-layer prototype and a unified experience. Mode 2 (advisory services) is dropped &mdash; the commons is the product. The sensing loop tidal rhythms are a hypothesis, not a commitment. The audio layer is post-foundation. What remains unchanged: the architecture, the principles, the gravity model, the merge boundary, the consent architecture, the fork right.</p>
+  <p><strong>On the frameworks in this document:</strong> Everything named here is a prototype being explored in public. These are the team's first hypotheses, published so they can be tested, challenged, and revised by the people who use them.</p>
+</div>
+
+<p class="reveal" style="font-size:0.72rem; color:var(--text-dim); margin-bottom:2rem;"><strong>Source documents:</strong> Seed Doc v3.1, North Star, Design Brief (Apr 2), Agentic Risk Map, Concept Paper, Living Graph Spec, CR-SQLite Matryoshka Proposal, Team Meetings (31 Mar &ndash; 2 Apr 2026)</p>
+
+<!-- ============ 01 VISION ============ -->
+<div class="sec-head reveal" id="vision"><span class="dot" style="color:var(--mint)"></span>01 &mdash; Vision</div>
+<h2 class="reveal">What if the digital arts could sense themselves?</h2>
+
+<p class="reveal">A(DAI) started with a question: what if the digital arts could sense themselves?</p>
+
+<p class="reveal">Practitioners carry the real knowledge of their scenes &mdash; who influenced whom, what actually happened in a specific studio, which works shifted things. But that knowledge lives in people, not in any shared structure. Scenes develop in parallel, connected ad hoc through systems optimised for synthetic attention. History gets written after the fact by people who weren't in the room. Curators "rediscover" what practitioners never forgot. Collectors acquire work without a clear map of its lineage.</p>
+
+<p class="reveal">A(DAI) is the infrastructure for that memory. A knowledge commons and semantic graph where practitioner intelligence, lived experience, artworks, and field signals accumulate into something the field can query, traverse, challenge, and build on.</p>
+
+<p class="reveal">It is <em>a</em> canon, not <em>the</em> canon. The indefinite article is load-bearing. It produces a reading of the field &mdash; structurally honest, provenance-tracked, and contestable. Never the reading.</p>
+
+<p class="reveal">It is a 10-year infrastructure project. Not a platform. Not a marketplace.</p>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> The core claim
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>An institution is not a building or a board. An institution is a persistent pattern of intention &mdash; something that reliably articulates what the field needs, holds itself accountable to its own stated values, and generates the next question.</p>
+      <p>The attention economy already has institutions. They are called platforms. They capture looking, redirect it, monetise it. A(DAI) refuses that axis. The system generates intention &mdash; directional, purposeful, ethically weighted readings of what the commons needs.</p>
+      <p>At the centre: the artwork. Not the artist's biography, not the platform's metrics, not the institution's prestige. The work itself &mdash; what it does, what it embodies, what it refuses, what it makes possible, who it is in conversation with.</p>
+    </div>
   </div>
 </div>
 
-<!-- ===== 1. VISION ===== -->
-<div id="s1" class="sec-head anim" style="--i:4">
-  <span class="dot" style="background:var(--navy)"></span> 01 &mdash; Core Vision
-</div>
-
-<div class="ve-card ve-card--hero anim" style="--i:5; margin-bottom:20px; border-left:3px solid var(--gold)">
-  <div class="card-desc" style="font-size:15px; line-height:1.7">
-    The market provided ownership provenance. A(DAI) supplies <strong style="color:var(--gold)">provenance of meaning</strong>&mdash;the missing semantic layer. Not a platform, not a marketplace. A persistent, contestable graph where practitioners and artworks accumulate relational mass through density and diversity, not fame or market value.
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Why digital arts, plural
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>"Digital art" sounds like one thing. It isn't. The actual history is a messy, overlapping explosion of code, networks, and machines: algorithmic, cybernetic, networked, generative. Each practice arriving on its own schedule, rarely in sequence.</p>
+      <p>We use the plural to keep the doors open. What would an institution look like if it were built to move with the practice? What happens when you refuse the idea that a canon has to be complete before it can be read?</p>
+    </div>
   </div>
 </div>
 
-<div class="callout anim" style="--i:6; margin-bottom:20px;">
-  <strong>Coherence without consensus.</strong> Two contradictory readings coexist when both are traceable, neither deprecated, and the tension itself becomes a named entity. Disagreement is evidence.
-</div>
-
-<!-- ===== 2. ATTENTION vs INTENTION ===== -->
-<div id="s2" class="sec-head anim" style="--i:7">
-  <span class="dot" style="background:var(--gold)"></span> 02 &mdash; Attention vs Intention
-</div>
-
-<div class="split anim" style="--i:8; margin-bottom:20px;">
-  <div class="split-left">
-    <div class="split-label" style="color:var(--navy)">Attention</div>
-    <div class="split-item">Scans for novelty</div>
-    <div class="split-item">Gravitates toward visibility</div>
-    <div class="split-item">Reinforces concentration</div>
-    <div class="split-item">Output: feeds, rankings</div>
-  </div>
-  <div class="split-right">
-    <div class="split-label" style="color:var(--gold)">Intention</div>
-    <div class="split-item">Scans for gaps</div>
-    <div class="split-item">Gravitates toward absence</div>
-    <div class="split-item">Redistributes focus</div>
-    <div class="split-item">Output: prompts, tensions, diagnoses</div>
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Why now
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>The NFT cycle demonstrated something specific: the only infrastructure the field had was borrowed from speculation. When the market contracted, the transaction layer contracted with it. But it did not leave nothing behind. Art Blocks, fxhash, Zora, and Manifold survive. On-chain provenance standards persist. Institutional adoption of digital art is a permanent structural change.</p>
+      <p>The market gave the field provenance of ownership. It never gave it provenance of meaning. A(DAI) builds the missing layer.</p>
+    </div>
   </div>
 </div>
 
-<!-- ===== 3. STRATEGY ===== -->
-<div id="s3" class="sec-head anim" style="--i:9">
-  <span class="dot" style="background:var(--sage)"></span> 03 &mdash; Strategy
-</div>
 
-<div class="grid-2 anim" style="--i:10; margin-bottom:20px;">
-  <div class="ve-card" style="border-top:3px solid var(--sage)">
-    <div class="card-label" style="color:var(--sage)">Mode 1 &mdash; Commons</div>
-    <div class="card-desc">Open, field-owned intelligence under CC-BY-SA. Never sold. The actual work. Scaffolding, not delegation&mdash;practitioner agents surface candidates; practitioners review and submit.</div>
-  </div>
-  <div class="ve-card" style="border-top:3px solid var(--gold)">
-    <div class="card-label" style="color:var(--gold)">Mode 2 &mdash; Advisory</div>
-    <div class="card-desc">Decision-support services for institutional actors (collectors, curators) built atop Mode 1 without replacing it. Revenue enables the commons.</div>
-  </div>
-</div>
+<!-- ============ 02 PRINCIPLES ============ -->
+<div class="sec-head reveal" id="principles"><span class="dot" style="color:var(--sky)"></span>02 &mdash; Principles</div>
+<h2 class="reveal">Six instincts &mdash; and twelve more</h2>
 
-<div class="metrics anim" style="--i:11; margin-bottom:20px;">
-  <div class="metric-pill" style="border-left:3px solid var(--navy)">
-    <div class="metric-name">Relational density</div>
-    <div class="metric-desc">Connection richness weighted by edge-type diversity per node</div>
-  </div>
-  <div class="metric-pill" style="border-left:3px solid var(--terracotta)">
-    <div class="metric-name">Interpretive diversity</div>
-    <div class="metric-desc">Primary alarm&mdash;low diversity indicates system failure</div>
-  </div>
-  <div class="metric-pill" style="border-left:3px solid var(--sage)">
-    <div class="metric-name">Provenance quality</div>
-    <div class="metric-desc">% of signals with complete traceability chains</div>
-  </div>
-  <div class="metric-pill" style="border-left:3px solid var(--gold)">
-    <div class="metric-name">Frontier signal rate</div>
-    <div class="metric-desc">90-day proto-concept emergence</div>
-  </div>
-</div>
+<p class="reveal">Six instincts guide how A(DAI) is built, extended by twelve additional principles:</p>
 
-<!-- ===== 4. GRAVITATIONAL MODEL ===== -->
-<div id="s4" class="sec-head anim" style="--i:12">
-  <span class="dot" style="background:var(--terracotta)"></span> 04 &mdash; Gravitational Model
-</div>
+<ol class="principles-list reveal">
+  <li><strong>Show the bias.</strong> No one is neutral. A declared position produces stronger knowledge than pretending otherwise.</li>
+  <li><strong>It matters how you know something.</strong> We track who made a connection, why, from what position, with what evidence.</li>
+  <li><strong>Contradictions coexist.</strong> When claims conflict, they sit side by side with their provenance intact. The graph remembers how it changed.</li>
+  <li><strong>The art comes first.</strong> Movements and genealogies emerge from the works. They don't get imposed onto them.</li>
+  <li><strong>Our vocabulary is a hypothesis.</strong> Every parameter is versioned and open to challenge. Disagreement is evidence.</li>
+  <li><strong>The system watches for what's forming.</strong> Most knowledge systems reward what's already legible. We're trying to notice when practitioners reach for language that doesn't exist yet &mdash; where the field is actually moving. If the system can't see that, it's just an archive with better plumbing.</li>
+  <li><strong>Intention over attention.</strong> Never optimise for engagement. Measure relational depth.</li>
+  <li><strong>Gravity, not hierarchy.</strong> Mass through relations, not rank. Categories form around practice.</li>
+  <li><strong>Frontier signals are the most valuable signals.</strong> Surface what the system cannot classify. Give it a lifecycle.</li>
+  <li><strong>Governance at the gate, not inside the data.</strong> The data preserves everything. The merge boundary is where judgment lives. The parameters are open and forkable.</li>
+  <li><strong>Everything is a prototype until the field says otherwise.</strong> Published for testing. Designed to be rewritten.</li>
+  <li><strong>Provenance of meaning.</strong> Trace the intellectual arc, not just the ownership chain.</li>
+  <li><strong>Deep time.</strong> Every decision against a 10-year horizon.</li>
+  <li><strong>Show the work.</strong> If the reasoning cannot be traced, the system has failed.</li>
+  <li><strong>Contribution deserves feedback.</strong> When someone gives knowledge, they see what happened with it.</li>
+  <li><strong>Agent-native.</strong> Agents are first-class actors, not bolt-ons.</li>
+  <li><strong>Coherence over consensus.</strong> Multiple readings coexist. Disagreement is evidence. The system holds tensions rather than resolving them.</li>
+  <li><strong>Sympoietic, not autopoietic.</strong> The system makes-with its contributors, its infrastructure, its supply chains.</li>
+</ol>
 
-<div class="grav-graph anim" style="--i:13">
-  <div class="grav-node grav-node--practitioner" style="grid-area:p">
-    <div class="grav-node__circle">P</div>
-    <div class="grav-node__name">Practitioner</div>
-    <div class="grav-node__self">INFLUENCES</div>
-  </div>
-  <div class="grav-node grav-node--artwork" style="grid-area:a">
-    <div class="grav-node__circle">A</div>
-    <div class="grav-node__name">Artwork</div>
-    <div class="grav-node__self">RESPONDS_TO</div>
-  </div>
-  <div class="grav-node grav-node--concept" style="grid-area:c">
-    <div class="grav-node__circle">C</div>
-    <div class="grav-node__name">Concept</div>
-    <div class="grav-node__self">TENSION_WITH</div>
-  </div>
-  <div class="grav-node grav-node--signal" style="grid-area:s">
-    <div class="grav-node__circle">S</div>
-    <div class="grav-node__name">Signal</div>
-    <div class="grav-node__self">CONTESTS</div>
-  </div>
-  <div class="grav-note" style="grid-column:1/-1">
-    Nodes accumulate mass through relational density and diversity, not fame or market value. Piyush to present.
+
+<!-- ============ 03 STRATEGY ============ -->
+<div class="sec-head reveal" id="strategy"><span class="dot" style="color:var(--sage)"></span>03 &mdash; Strategy</div>
+<h2 class="reveal">The commons is the product</h2>
+
+<div class="card reveal" style="margin-bottom:1.4rem; border-top: 2px solid var(--mint);">
+  <div class="card-label"><span class="dot" style="color:var(--mint); width:5px; height:5px; border-radius:50%; display:inline-block;"></span> Mode 1</div>
+  <div class="card-title">There is no Mode 2</div>
+  <div class="card-desc">
+    <p>A(DAI) builds the commons. Open, field-owned intelligence under CC-BY-SA. Never sold. The databases themselves are the product. Forkability is not a feature &mdash; it is the point.</p>
+    <p>The success criteria: the more A(DAI)s exist, the better. A community in Lagos or S&atilde;o Paulo or Taipei should be able to fork the data, apply their own merge parameters, define their own vocabulary, run their own canon. The founding team's A(DAI) is one instance among many.</p>
   </div>
 </div>
 
-<div class="anim" style="--i:14; margin-bottom:20px; overflow-x:auto;">
-  <table class="edge-table">
-    <thead>
-      <tr><th>Edge Type</th><th>Direction</th><th>Meaning</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><span class="edge-type">EMBODIES</span></td><td class="edge-dir">Artwork &rarr; Concept</td><td>Manifests concept</td></tr>
-      <tr><td><span class="edge-type">RESPONDS_TO</span></td><td class="edge-dir">Artwork &rarr; Artwork</td><td>Direct dialogue</td></tr>
-      <tr><td><span class="edge-type">USES_TECHNIQUE</span></td><td class="edge-dir">Artwork &rarr; Concept</td><td>Medium/technique deployed</td></tr>
-      <tr><td><span class="edge-type">CREATED_BY</span></td><td class="edge-dir">Artwork &rarr; Practitioner</td><td>Authorship</td></tr>
-      <tr><td><span class="edge-type">TENSION_WITH</span></td><td class="edge-dir">Concept &harr; Concept</td><td>Productive disagreement</td></tr>
-      <tr><td><span class="edge-type">PRACTICES</span></td><td class="edge-dir">Practitioner &rarr; Concept</td><td>Ongoing engagement</td></tr>
-      <tr><td><span class="edge-type">PIONEERED</span></td><td class="edge-dir">Practitioner &rarr; Concept</td><td>Originates/advances</td></tr>
-      <tr><td><span class="edge-type">INFLUENCES</span></td><td class="edge-dir">Practitioner &rarr; Practitioner</td><td>Directional influence</td></tr>
-      <tr><td><span class="edge-type">CONTESTS</span></td><td class="edge-dir">Signal &harr; Signal</td><td>Explicit disagreement</td></tr>
-    </tbody>
-  </table>
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> A canon you can change
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>You show up, hear the system narrate a perspective on the field, and pause it to push back. Question a connection, propose a different one, offer a first-hand account of something the graph hasn't seen. Contributing feels like conversation, not submission. The provenance layer handles the rigour.</p>
+      <p>As practitioners show up with testimony and counter-claims, certain parts of the graph get dense with meaning. That density is the field defining itself in real time.</p>
+      <p>Every canon is partial, generative, provocative. The editorial judgment is field-owned: practitioners shape what the system looks for and how it reads what it finds. Those decisions are part of the commons &mdash; challengeable, versioned, forkable.</p>
+    </div>
+  </div>
 </div>
 
-<!-- ===== 4b. IMPLEMENTATION (NESTED) ===== -->
-<div class="impl-nest">
-
-<div id="s4b" class="impl-label anim" style="--i:14.5">feat/cr-sqlite-backend &mdash; implementation</div>
-
-<div class="kpi-row anim" style="--i:14.6; margin-bottom:20px;">
-  <div class="kpi"><div class="kpi-num">774</div><div class="kpi-label">Nodes</div></div>
-  <div class="kpi"><div class="kpi-num">929</div><div class="kpi-label">Edges</div></div>
-  <div class="kpi"><div class="kpi-num">59</div><div class="kpi-label">Practitioners</div></div>
-  <div class="kpi"><div class="kpi-num">6</div><div class="kpi-label">Tables</div></div>
-  <div class="kpi"><div class="kpi-num">14</div><div class="kpi-label">HTTP Handlers</div></div>
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Where this goes
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>We don't want to be the official voice. We want to be the first of many. The narrative comes first. The market follows.</p>
+      <p>Forks aren't silos. The protocol lets knowledge move between instances. Insights from one can be proposed back to others, keeping the conversation open across the network.</p>
+      <p>The founding version carries our biases. The system is built to surface them. Everything is CC-BY-SA. We are one instance among many. The rest is up to the field.</p>
+    </div>
+  </div>
 </div>
 
-<p class="card-desc anim" style="--i:14.7; margin-bottom:16px; max-width:680px;">
-  Written in <strong style="color:var(--text)">Shards</strong> (dataflow language by Fragcolor). Single <code style="font-family:var(--font-mono);font-size:11px;background:var(--navy-dim);color:var(--navy);padding:1px 5px;border-radius:3px;">adai.db</code> with CR-SQLite extension for CRDT-ready tables. Deployed on Fly.io Frankfurt, 512MB.
+
+<!-- ============ 04 THREE-LAYER PROTOTYPE ============ -->
+<div class="sec-head reveal" id="prototype"><span class="dot" style="color:var(--mint)"></span>04 &mdash; The Three-Layer Prototype</div>
+<h2 class="reveal">Plants grow from roots, not flowers</h2>
+
+<p class="reveal">The full vision &mdash; an immersive audio-first conversational experience with the canon &mdash; is the destination. The build is staged in three layers that establish the foundation first.</p>
+
+<div class="layer-steps reveal">
+  <!-- Layer 1 -->
+  <div class="layer-step">
+    <div class="layer-num"><span>01</span></div>
+    <div class="layer-card">
+      <h3>Generative Landing Page + North Star</h3>
+      <p>The immediate deliverable. Publish the North Star on Substack and deploy a generative landing page on Netlify that communicates the aesthetic and vision. Not connected to the backend yet. It should evoke the feeling of what A(DAI) is &mdash; the vastness, the partiality, the plurality &mdash; before the full system exists.</p>
+      <p><strong>Piyush is building:</strong> Particle/gravitational node visualisations. Brand system (logos, fonts, colours, generative system for collateral extraction). Infinite scroll.</p>
+      <p style="margin-top:0.8rem;"><strong>How the design embodies the principles:</strong></p>
+      <ul>
+        <li>You can never see the whole universe, only a snapshot &rarr; a canon that refuses completeness</li>
+        <li>Edge diversity as visual weight, not volume &rarr; it matters how you know something</li>
+        <li>Generative surface, different every visit &rarr; our vocabulary is a hypothesis</li>
+        <li>Brighter/denser nodes where relations cross regions &rarr; gravitational mass through relational density</li>
+        <li>User can customise the aesthetic &rarr; forkability, "one of many," make your own</li>
+      </ul>
+      <p><strong>Call to action:</strong> Collect emails. When the graph is ready, these people are the first to test it.</p>
+    </div>
+  </div>
+
+  <!-- Layer 2 -->
+  <div class="layer-step">
+    <div class="layer-num"><span>02</span></div>
+    <div class="layer-card">
+      <h3>Public Data Layer + Graph</h3>
+      <p>First automated data runs from curated sources populate the graph with enough substance to be interesting &mdash; and provocative. This is the foundation.</p>
+      <p>The design principle is provocation: the first runs should produce something substantive enough for people to disagree with. Disagreement drives contribution.</p>
+      <p><strong>Sources (Iri identifying 10&ndash;15):</strong></p>
+      <ul>
+        <li>Wikipedia/Wikidata &mdash; base knowledge, canonical practitioners</li>
+        <li>Institutional archives &mdash; ZKM, Ars Electronica, Rhizome</li>
+        <li>Platform APIs &mdash; Tezos/fxhash (first artwork nodes)</li>
+        <li>RSS feeds, BlueSky &mdash; dynamic signal flow</li>
+        <li>X is $5k/mo &mdash; likely skip for now</li>
+      </ul>
+      <p><strong>Expected output:</strong> 2,000&ndash;5,000+ nodes after first three runs, including the first artwork nodes.</p>
+      <p><strong>Scout agents with editorial lens:</strong> Not valueless scraping. Agents carry coded values and a structured reasoning scaffolding. The editorial lens is the critique of AI built into the practice. The values with which agents perceive are authored by the team and are themselves a contribution to the commons.</p>
+    </div>
+  </div>
+
+  <!-- Layer 3 -->
+  <div class="layer-step">
+    <div class="layer-num"><span>03</span></div>
+    <div class="layer-card">
+      <h3>Intimate Layer + Practitioner Profiles</h3>
+      <p>Where the unique value lives. Qualitative input from practitioners &mdash; the implicit knowledge that isn't accessible on the web. What they know about their own scenes, who actually influenced whom, which works shifted things.</p>
+      <p><strong>LLM-assisted interviews (under critical evaluation):</strong> JB proposed LLM-conducted interviews as a scalable alternative to manual recordings. The idea: send practitioners a link, LLM conducts the interview with an editorial persona, transcript becomes signal. Vouch system: each participant can invite others they trust.</p>
+      <p><strong>Critical caveat:</strong> This needs human-in-the-loop. Without it, it's a glorified chatbot. The intimate layer's value IS lived experience and implicit knowledge &mdash; an LLM alone risks flattening exactly what makes practitioner input irreplaceable. The editorial persona must be carefully designed, and human review of extracted signals is non-negotiable. This approach is under evaluation, not confirmed.</p>
+      <p><strong>Practitioner profiles:</strong> Each practitioner gets a sovereign database (the Matryoshka's Layer 1). Self-authored data has no merge boundary &mdash; if you write to your own DB, free pass. External contributions go through review.</p>
+    </div>
+  </div>
+
+  <!-- Audio layer -->
+  <div class="layer-step">
+    <div class="layer-num"><span>&infin;</span></div>
+    <div class="layer-card">
+      <h3>The Audio Layer (post-foundation)</h3>
+      <p>Voice input with intent classification, TTS narratives, pause-and-challenge &mdash; this is the full vision. It sits on top of a protocol. Without the protocol, there's nothing to narrate.</p>
+      <p><strong>What the audio layer includes (when built):</strong></p>
+      <ul>
+        <li>Voice input with real-time transcription and language auto-detection</li>
+        <li>Intent classification: question, challenge, first-person account, annotation, narrative request</li>
+        <li>Pause-and-challenge: visitor pauses narrative, speaks a challenge, hears counter-evidence</li>
+        <li>Narrative generation: Claude traverses the graph, generates structured scripts, TTS produces audio</li>
+        <li>Every voice interaction generates a signal that enters the merge boundary</li>
+      </ul>
+      <p><strong>Preconditions:</strong> Data layers solid, protocol working, graph dense enough to narrate meaningfully, editorial guidance docs written.</p>
+    </div>
+  </div>
+</div>
+
+<div class="card reveal" style="border-top: 2px solid var(--sky); margin-bottom: 1.4rem;">
+  <div class="card-label"><span class="dot" style="color:var(--sky); width:5px; height:5px; border-radius:50%; display:inline-block;"></span> Basel</div>
+  <div class="card-title">June 2026</div>
+  <div class="card-desc">
+    <p>The goal is to have the prototype ready before Basel (June 2026). The deadline is real but the quality bar is higher than "something that works at a fair." We're building a product, not a demo. Basel is where we show it.</p>
+    <p>Basel is a demo moment, not the scope driver. The MVP ships when it's good, and Basel is the first place to show it if timing aligns.</p>
+  </div>
+</div>
+
+
+<!-- ============ 05 CONCEPT ============ -->
+<div class="sec-head reveal" id="concept"><span class="dot" style="color:var(--mint)"></span>05 &mdash; Concept</div>
+<h2 class="reveal">Artists and works at the centre of gravity</h2>
+
+<div class="grid-2 reveal">
+  <div class="card" style="border-top: 2px solid var(--mint);">
+    <div class="card-label">Core metaphor</div>
+    <div class="card-title">Gravitational mass</div>
+    <div class="card-desc">An artist's node accumulates mass not from fame or market value but from the density and diversity of their relational connections. More typed edges, backed by higher-confidence and more diverse signals, means more mass. More mass means more gravitational pull.</div>
+  </div>
+  <div class="card" style="border-top: 2px solid var(--sky);">
+    <div class="card-label">Core metric</div>
+    <div class="card-title">Edge type diversity per node</div>
+    <div class="card-desc">A practitioner connected to the demoscene, institutional critique, and generative code through three different edge types holds a structurally significant position. A node with 20 PRACTICES edges has less visual weight than a node with 5 edges across 4 different types.</div>
+  </div>
+</div>
+
+<p class="reveal">Artworks are nodes too. A work carries edges to its creator (<code>CREATED_BY</code>), to the techniques it uses (<code>USES_TECHNIQUE</code>), to the concepts it embodies (<code>EMBODIES</code>), to works it responds to (<code>RESPONDS_TO</code>), to institutions where it was shown (<code>EXHIBITED_IN</code>). A work's gravitational mass comes from the same place as a practitioner's: the density and diversity of its connections.</p>
+
+<p class="reveal">The sensing layer reads artworks for different things than practitioners. Practitioners have trajectories. Artworks have positions: they occupy a point in the field where technique, concept, philosophy, and context intersect. When multiple artworks occupy similar positions, that is a tendency. When an artwork occupies a position no other work shares, that is a frontier. When two artworks <code>RESPOND_TO</code> each other but <code>EMBODY</code> opposing concepts, that is a tension.</p>
+
+<p class="reveal"><strong>Tensions are the most valuable thing the system can surface.</strong> Not gaps to be filled. Productive, unresolvable tensions that reveal what the field is actually arguing about.</p>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Coherence without consensus
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <div class="split">
+        <div class="split-left">
+          <div class="split-label">Consensus</div>
+          <div class="split-item">We all agree on what the graph means</div>
+          <div class="split-item">Disagreement is a bug</div>
+        </div>
+        <div class="split-right">
+          <div class="split-label">Coherence</div>
+          <div class="split-item">The graph's structure is consistent with its own commitments</div>
+          <div class="split-item">What it means is deliberately multiple</div>
+          <div class="split-item">Disagreement is evidence</div>
+        </div>
+      </div>
+      <p>Two contradictory readings are coherent when (a) both have provenance, (b) both are reachable in the graph, (c) neither is deprecated, and (d) the tension between them is a named entity &mdash; a <code>TENSION_WITH</code> edge &mdash; with its own lifecycle.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> The generative interface
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <ul>
+        <li><strong>Different every time.</strong> The entry point shifts. The narrative foregrounds different tensions. The provocations change based on what's been contested recently, where frontier signals are forming.</li>
+        <li><strong>Invites play.</strong> The visitor can ask "what if" questions, request alternative traversals, challenge any claim and hear the evidence. The system is designed to reward curiosity and debate.</li>
+        <li><strong>Worldbuilding through conversation.</strong> When a visitor speaks, they are not just querying &mdash; they are contributing to the shape of the canon. Their perspective, their challenge, their first-person knowledge changes what the system knows and how it narrates itself.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Two data layers
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <table class="styled-table">
+        <thead><tr><th>Layer</th><th>What</th><th>Source</th><th>Confidence</th><th>Character</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Public</strong></td><td>Crawled from open sources</td><td>Wikipedia, institutional archives, platform APIs, RSS, BlueSky</td><td><code>medium</code> (agent-classified)</td><td>Noisy, substantive, the broad foundation</td></tr>
+          <tr><td><strong>Intimate</strong></td><td>Qualitative practitioner input</td><td>Interviews, direct contribution, recorded conversations</td><td><code>high</code> (practitioner-confirmed)</td><td>Implicit knowledge, lived experience, the unique value</td></tr>
+        </tbody>
+      </table>
+      <p>Both flow through the same backend. The distinction should be visually represented. The public layer is the Dante's inferno underneath &mdash; noisy, maybe wrong, but alive. The intimate layer is the refined, qualitative surface where practitioners share what only they know.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Provenance of meaning, not ownership
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>Every node carries full provenance: who contributed the signal, when, how, at what confidence level, whether it comes from lived experience, under what consent.</p>
+      <p><strong>Bi-temporal provenance.</strong> Every signal tracks two timestamps: <strong>event time</strong> (when something happened in the field) and <strong>ingestion time</strong> (when A(DAI) observed it). The gap between these two is itself diagnostic &mdash; a large gap means the commons is slow to notice.</p>
+      <h3>Consent architecture</h3>
+      <p>Consent is not binary. Contributors set machine-readable terms:</p>
+      <ul>
+        <li><strong>Use scope:</strong> structural analysis only / full commons</li>
+        <li><strong>Attribution:</strong> anonymous / attributed / attributed with notification</li>
+        <li><strong>Duration:</strong> perpetual / time-limited</li>
+        <li><strong>Revocation:</strong> contributor can withdraw signal; derived edges flagged for review</li>
+      </ul>
+      <p>Consent terms are stored alongside signal provenance and enforced at the merge boundary.</p>
+      <p><strong>Third-party representation.</strong> The graph will contain nodes for practitioners who have not directly contributed. Governed: nodes for non-contributors are created as <strong>unconfirmed</strong> with limited metadata. Non-contributors can claim, modify, or request removal of their node. Linking pseudonymous identities without consent is prohibited.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ 06 ARCHITECTURE ============ -->
+<div class="sec-head reveal" id="architecture"><span class="dot" style="color:var(--sky)"></span>06 &mdash; Architecture</div>
+<h2 class="reveal">CR-SQLite Matryoshka</h2>
+
+<p class="reveal">CR-SQLite extends SQLite with CRDT capabilities &mdash; databases that merge without conflicts. The architecture nests:</p>
+
+<div class="matryoshka reveal">
+  <div class="matryoshka-layer">
+    <div class="matryoshka-label">Layer 3</div>
+    <div class="matryoshka-name">Field DB</div>
+    <p style="font-size:0.72rem; color:var(--text-dim); margin-bottom:0.8rem;">Full commons &mdash; fat materialised view. Gravitational queries run here.</p>
+    <div class="matryoshka-layer">
+      <div class="matryoshka-label">Layer 2</div>
+      <div class="matryoshka-name">Scene DB</div>
+      <p style="font-size:0.72rem; color:var(--text-dim); margin-bottom:0.8rem;">"Berlin generative art" &mdash; index of practitioners, scene-level signals</p>
+      <div class="matryoshka-layer">
+        <div class="matryoshka-label">Layer 1</div>
+        <div class="matryoshka-name">Practitioner DB</div>
+        <p style="font-size:0.72rem; color:var(--text-dim);">One .db per practitioner. Portable &mdash; "give me my data" = hand them a file.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="reveal">CRDTs guarantee syntactic merge. When a fork re-merges and contradictory edges appear, both persist with full provenance. The merge boundary flags the contradiction. Resolution is human, not mechanical.</p>
+
+<p class="reveal"><strong>Current state:</strong> Single-DB deployment (774 nodes, 929 edges). Per-practitioner split designed, not implemented. Not a blocker for the prototype.</p>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Schema
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>Three CRR (CRDT-replicated) tables shared across all DBs:</p>
+      <p><strong>nodes</strong> &mdash; <code>id</code>, <code>type</code>, <code>name</code>, <code>metadata</code> (JSON), <code>created_at</code>, <code>updated_by</code></p>
+      <p><strong>edges</strong> &mdash; <code>source_id</code>, <code>target_id</code>, <code>edge_type</code>, <code>signal_id</code>, <code>confidence</code>, <code>charge</code>, <code>event_time</code>, <code>ingestion_time</code>, <code>valid_from</code>, <code>valid_until</code>, <code>invalidated_by</code>, <code>created_at</code></p>
+      <ul>
+        <li>Composite PK: <code>(source_id, target_id, edge_type, signal_id)</code></li>
+        <li>Independent observations produce independent rows. "How strong is the connection?" is not a number &mdash; it's: "Observed 5 times, by 3 sources, including 1 practitioner self-report."</li>
+        <li>Bi-temporal: <code>event_time</code> (when true in the field) + <code>ingestion_time</code> (when A(DAI) observed it)</li>
+        <li>Edges are never deleted. When facts change, edges are invalidated with <code>valid_until</code> timestamp</li>
+      </ul>
+      <p><strong>signals</strong> &mdash; <code>id</code>, <code>title</code>, <code>source_url</code>, <code>source_type</code>, <code>cla_layer</code>, <code>summary</code>, <code>content</code>, <code>submitted_by</code>, <code>confidence</code>, <code>lived_experience</code>, <code>event_time</code>, <code>ingestion_time</code>, <code>consent_scope</code>, <code>created_at</code></p>
+      <p>Plus local tables: <code>intake_queue</code> (staging before merge), <code>settings</code>.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Typed edges
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <h3>Ship first (reliable classification)</h3>
+      <table class="styled-table">
+        <thead><tr><th>Edge type</th><th>From &rarr; To</th><th>What it means</th></tr></thead>
+        <tbody>
+          <tr><td><span class="edge-type-code">PRACTICES</span></td><td class="edge-dir">Practitioner &rarr; Concept</td><td>Works with this concept</td></tr>
+          <tr><td><span class="edge-type-code">BELONGS_TO</span></td><td class="edge-dir">Practitioner &rarr; Scene</td><td>Part of this scene</td></tr>
+          <tr><td><span class="edge-type-code">EXHIBITED_AT</span></td><td class="edge-dir">Practitioner &rarr; Institution</td><td>Exhibition record</td></tr>
+          <tr><td><span class="edge-type-code">COLLABORATES_WITH</span></td><td class="edge-dir">Practitioner &rarr; Practitioner</td><td>Active collaboration</td></tr>
+          <tr><td><span class="edge-type-code">CREATED_BY</span></td><td class="edge-dir">Artwork &rarr; Practitioner</td><td>Made this work</td></tr>
+          <tr><td><span class="edge-type-code">RELATED_TO</span></td><td class="edge-dir">Any &rarr; Any</td><td>Catch-all &mdash; flag for vocabulary expansion</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Deploy when signal volume justifies</h3>
+      <table class="styled-table">
+        <thead><tr><th>Edge type</th><th>From &rarr; To</th><th>What it means</th></tr></thead>
+        <tbody>
+          <tr><td><span class="edge-type-code">PIONEERED</span></td><td class="edge-dir">Practitioner &rarr; Concept</td><td>Originated or significantly advanced</td></tr>
+          <tr><td><span class="edge-type-code">CRITIQUES</span></td><td class="edge-dir">Practitioner &rarr; Concept</td><td>Actively challenges or works against</td></tr>
+          <tr><td><span class="edge-type-code">INFLUENCES</span></td><td class="edge-dir">Practitioner &rarr; Practitioner</td><td>Directional influence</td></tr>
+          <tr><td><span class="edge-type-code">TENSION_WITH</span></td><td class="edge-dir">Concept &rarr; Concept</td><td>Productive tension</td></tr>
+          <tr><td><span class="edge-type-code">EMERGED_FROM</span></td><td class="edge-dir">Concept &rarr; Scene</td><td>Originated in or tied to this scene</td></tr>
+          <tr><td><span class="edge-type-code">EMBODIES</span></td><td class="edge-dir">Artwork &rarr; Concept</td><td>The work manifests this concept</td></tr>
+          <tr><td><span class="edge-type-code">RESPONDS_TO</span></td><td class="edge-dir">Artwork &rarr; Artwork</td><td>Direct dialogue between works</td></tr>
+          <tr><td><span class="edge-type-code">USES_TECHNIQUE</span></td><td class="edge-dir">Artwork &rarr; Concept</td><td>Technique or medium used</td></tr>
+          <tr><td><span class="edge-type-code">EXHIBITED_IN</span></td><td class="edge-dir">Artwork &rarr; Institution/Event</td><td>Where the work was shown</td></tr>
+          <tr><td><span class="edge-type-code">CONTESTS</span></td><td class="edge-dir">Signal &rarr; Signal</td><td>Explicit disagreement</td></tr>
+        </tbody>
+      </table>
+
+      <p>This vocabulary is provisional. Accumulation of <code>RELATED_TO</code> edges is the agenda for expanding the vocabulary &mdash; what the system can't classify marks where the field is moving.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Edge classification rules
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <ul>
+        <li>Claude assigns edge types guided by editorial skills files. Judgment belongs in skills, not in Python.</li>
+        <li>Agent-classified edges default to <code>confidence: medium</code>. Practitioner-confirmed edges get <code>confidence: high</code>.</li>
+        <li>Correction = just another row. Both rows coexist. Query layer sees the full evidence trail.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Queries
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>Field-wide queries (gravitational model) run against <code>field.db</code> &mdash; single file, single SQL. Drill-down uses ATTACH for specific practitioner DBs. Never attach more than ~10 at once.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Embeddings
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>Multimodal embeddings (Gemini Embedding 2) map text, images, audio, video into a single semantic space. Model-agnostic &mdash; stored alongside the data, not as the data. Provider change protocol: archive current positions, run parallel embedding, verify semantic neighbourhoods before transitioning.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Why a context graph, not a vector store
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>Vector search returns document chunks ranked by similarity. A context graph returns structured knowledge &mdash; entities, relationships, and temporal validity.</p>
+      <p>When a new signal says a practitioner has left a scene, the graph invalidates the <code>BELONGS_TO</code> edge, preserves the history, and updates every query that touches that relationship. Typed edges with temporal validity give the system what embeddings alone cannot. Embeddings serve positioning and discovery. The graph serves knowledge.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Signal flow
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <div class="signal-flow">
+        <div class="signal-step">
+          <div class="signal-step-label">Signal arrives</div>
+          <div class="signal-step-desc">Contribution, scout agent, practitioner input, recorded conversation</div>
+        </div>
+        <div class="signal-step">
+          <div class="signal-step-label">Source classification</div>
+          <div class="signal-step-desc">source_origin: <code>human_primary</code> / <code>human_secondary</code> / <code>ai_assisted</code> / <code>ai_generated</code> / <code>unknown</code>. Event time + ingestion time + consent terms.</div>
+        </div>
+        <div class="signal-step">
+          <div class="signal-step-label">Processing</div>
+          <div class="signal-step-desc">Entity extraction, edge type classification, processing trace logged. Ouroboros check: is this signal derived from a previous A(DAI) output?</div>
+        </div>
+        <div class="signal-step">
+          <div class="signal-step-label">Intake queue</div>
+          <div class="signal-step-desc">Staging &mdash; "submitted, pending"</div>
+        </div>
+        <div class="signal-step">
+          <div class="signal-step-label">Merge boundary</div>
+          <div class="signal-step-desc">Auto-merge (practitioner self-report on own DB, trusted contributor). Hold for review (new contributor, external contribution). Frontier flag (can't classify &rarr; 90-day lifecycle). Consent terms enforced here.</div>
+        </div>
+        <div class="signal-step">
+          <div class="signal-step-label">Graph</div>
+          <div class="signal-step-desc">CR-SQLite Matryoshka. Practitioner DBs &larr; scene DBs &larr; field DB. Typed edges, full provenance, bi-temporal timestamps.</div>
+        </div>
+        <div class="signal-step">
+          <div class="signal-step-label">Contribution receipt</div>
+          <div class="signal-step-desc">Contributor sees what was extracted, what connections formed, where their signal sits.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Ouroboros defence
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>Source origin typing prevents recursive quality degradation: <code>human_primary</code> (direct practitioner contribution), <code>human_secondary</code> (human-authored article), <code>ai_assisted</code> (human-authored with AI tools), <code>ai_generated</code> (fully AI-generated), <code>unknown</code>. The merge boundary weights these differently. <code>ai_generated</code> requires review regardless of contributor trust. Cycle detection flags signals whose provenance traces back through AI processing to a previous A(DAI) output.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Interoperability targets
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <ul>
+        <li><strong>Getty AAT/ULAN</strong> &mdash; map concepts and practitioners to Getty identifiers</li>
+        <li><strong>Wikidata</strong> &mdash; export practitioner and concept nodes where licence-compatible</li>
+        <li><strong>C2PA / Content Credentials</strong> &mdash; integrate production provenance for artwork nodes</li>
+        <li><strong>IPFS CIDs</strong> &mdash; content-addressed identifiers for artwork media</li>
+      </ul>
+      <p>Schema fields from launch, even if unpopulated.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Entity IDs
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>Human-readable IDs with type prefix: <code>artwork:fidenza</code>, <code>practitioner:casey reas</code>, <code>concept:generative code</code>. Not kebab-case slugs or UUIDs.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ 07 MERGE BOUNDARY ============ -->
+<div class="sec-head reveal" id="merge"><span class="dot" style="color:var(--sage)"></span>07 &mdash; The Merge Boundary</div>
+<h2 class="reveal">The reviewed gate</h2>
+
+<p class="reveal">Every signal entering the graph passes through a reviewed gate. The parameters at this gate &mdash; what auto-merges, what gets held, what triggers frontier flagging &mdash; are curatorial decisions made executable, auditable, and revisable.</p>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Trust model
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <table class="styled-table">
+        <thead><tr><th>Trust level</th><th>Who</th><th>Behaviour</th></tr></thead>
+        <tbody>
+          <tr><td><strong>New contributor</strong></td><td>First submission</td><td>Held for review</td></tr>
+          <tr><td><strong>Reviewed</strong></td><td>Established track record</td><td>Auto-merge eligible</td></tr>
+          <tr><td><strong>Practitioner (self-report)</strong></td><td>Artist on their own work</td><td>Highest epistemic authority, no merge boundary on own DB</td></tr>
+          <tr><td><strong>Agent (scaffolded)</strong></td><td>Agent surfaces candidates, practitioner approves</td><td>Dual provenance</td></tr>
+          <tr><td><strong>Agent (autonomous)</strong></td><td>Established track record, explicit accountability</td><td>Trust-level upgrade, not the default</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Frontier signals
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>When the system encounters something it can't classify, that's not an error &mdash; it's a frontier signal. These mark where digital arts practice is ahead of the system's vocabulary. Frontier signals carry a 90-day lifecycle: absorbed into the vocabulary, reclassified, or archived with a rationale. They are surfaced, not hidden.</p>
+      <p>Frontier signals carry extra gravitational mass precisely because they have few connections by definition.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Open, versioned, forkable
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>Every merge parameter is a versioned document in the commons. Anyone can fork the parameters &mdash; a different institution could take the same protocol, apply different rules, and run a different commons on the same data. That is the structural guarantee against enclosure.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ 08 SENSING & NARRATIVE ============ -->
+<div class="sec-head reveal" id="sensing"><span class="dot" style="color:var(--mint)"></span>08 &mdash; Sensing and Narrative</div>
+<h2 class="reveal">Every interaction is a sensing event</h2>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> What is committed
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <ul>
+        <li>Every interaction generates a signal</li>
+        <li>Signals that pass the merge boundary update the graph immediately</li>
+        <li>The narrative engine reflects the current graph state, not a cached snapshot</li>
+        <li>Frontier signals are surfaced, not queued for a batch cycle</li>
+        <li>Processing traces are mandatory: every signal processed through Claude carries what it extracted, rejected, and at what confidence</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> What is open for design
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>The tidal rhythm model (6h/24h/72h pulse/survey/dream) from v3.1 is a hypothesis, not a commitment. The primary sensing rhythm is the interaction itself &mdash; every conversation is a sensing event.</p>
+      <p>Open questions:</p>
+      <ul>
+        <li>Whether deeper structural analysis (dream cycle, CLA consolidation, tendency vocabulary evolution) runs on a tidal rhythm, is triggered by threshold events, or operates some other way</li>
+        <li>How external calibration works in practice (quarterly blind spot audits are a starting point)</li>
+        <li>Whether the sensing layer is a separate process or emerges from interaction patterns</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Narrative generation (destination)
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>The narrative engine is a core component of the full vision. It produces situated, partial readings of the field &mdash; not summaries, but perspectives that foreground specific tensions and structural positions.</p>
+      <p><strong>Every narrative is a provocation.</strong> The system does not aim for balance. It aims for honesty about its own partiality. A narrative might foreground a tension, trace an influence chain that challenges received wisdom, or surface a region where the vocabulary is still forming. It names what it's leaving out.</p>
+      <p><strong>Narrative provenance:</strong> Every generated narrative carries metadata: which nodes and edges it drew from, which traversal paths it took, what it omitted and why. The narrative is auditable.</p>
+      <p><strong>Anti-sycophancy:</strong> Divergence between Claude's structural analysis and visitor responses is healthy. If they converge suspiciously, the system may be manufacturing intention rather than detecting it.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Intention over attention &mdash; metrics
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>The system does not track time-on-page, click-through, or audience growth. It measures:</p>
+      <ul>
+        <li><strong>Relational density</strong> &mdash; how richly connected the graph is, weighted by edge type diversity per node</li>
+        <li><strong>Edge diversity</strong> &mdash; distribution of edge types. Prevents collapse into a single relation type</li>
+        <li><strong>Provenance quality</strong> &mdash; percentage of signals with complete provenance chains</li>
+        <li><strong>Frontier signal rate</strong> &mdash; signals that generate new concept nodes or edge types</li>
+        <li><strong>Interpretive diversity (primary alarm)</strong> &mdash; low narrative diversity signals monoculture. If multiple scout agents return structurally similar signals despite different skill files, the processing model is producing epistemic homogenisation</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ 09 AGENTIC RISK MAP ============ -->
+<div class="sec-head reveal" id="risk"><span class="dot" style="color:#ff6b6b"></span>09 &mdash; Agentic Risk Map</div>
+<h2 class="reveal">12 failure modes, mapped</h2>
+
+<p class="reveal">Mapped from "Agents of Chaos" (Shapira et al., Feb 2026) &mdash; 11 failure modes from live red-teaming of autonomous LLM agents, plus GDPR erasure.</p>
+
+<div class="reveal" style="overflow-x:auto;">
+<table class="styled-table">
+  <thead><tr><th>Risk</th><th>A(DAI) defence</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Disproportionate response</strong></td><td>Constrained mutation operations (no raw SQL)</td><td>Principle exists, not enforced</td></tr>
+    <tr><td><strong>Non-owner compliance</strong></td><td>Trust tiers + merge boundary</td><td>Designed, not in schema</td></tr>
+    <tr><td><strong>Information disclosure</strong></td><td>Consent architecture</td><td>Not in db.sql</td></tr>
+    <tr><td><strong>Resource looping</strong></td><td>Rate limits + dedup</td><td>Not built</td></tr>
+    <tr><td><strong>Denial of service</strong></td><td>Rate limits on contribution endpoint</td><td>Not built</td></tr>
+    <tr><td><strong>Provider value override</strong></td><td>Editorial guidance docs</td><td style="color:#ff6b6b; font-weight:600;">Not written &mdash; highest-risk gap</td></tr>
+    <tr><td><strong>Self-harm / config tampering</strong></td><td>Read-only pipeline config</td><td>Not enforced</td></tr>
+    <tr><td><strong>Identity spoofing</strong></td><td>Authentication</td><td>Not designed</td></tr>
+    <tr><td><strong>Cross-agent corruption</strong></td><td>Stateless pipeline + merge boundary</td><td>Needs enforcement</td></tr>
+    <tr><td><strong>Persistent state injection</strong></td><td>Signal content as data, not instructions</td><td>Needs enforcement</td></tr>
+    <tr><td><strong>Libel / misinformation</strong></td><td>Confidence levels + practitioner correction</td><td>Schema exists, UX not built</td></tr>
+    <tr><td><strong>GDPR erasure vs "never delete"</strong></td><td>Dedicated erasure tool across Matryoshka</td><td>Not designed</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout reveal" style="border-left-color: #ff6b6b; background: rgba(255,107,107,0.06);">
+  <p><strong>GDPR erasure:</strong> A(DAI) operates under EU jurisdiction. GDPR Article 17 gives individuals the right to erasure. The "never delete, only invalidate" principle directly conflicts. Invalidation with a timestamp is not deletion. A dedicated erasure tool must propagate hard deletion across all three Matryoshka layers with audit trail. This is a legal requirement before onboarding EU-resident practitioners at scale.</p>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Priority actions
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p><strong>Priority before Basel:</strong></p>
+      <ol>
+        <li>Constrain pipeline to predefined mutation ops</li>
+        <li>Trust tiers in contributor schema</li>
+        <li>Write editorial guidance docs</li>
+        <li>Rate limiting on contribution</li>
+        <li>Authentication flow</li>
+      </ol>
+      <p><strong>Priority before public scale:</strong></p>
+      <ol>
+        <li>GDPR erasure propagation</li>
+        <li>Consent enforcement at query layer</li>
+        <li>Practitioner correction flow</li>
+        <li>Input sanitisation</li>
+        <li>Processing traces with full audit trail</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ 10 GOVERNANCE ============ -->
+<div class="sec-head reveal" id="governance"><span class="dot" style="color:var(--sage)"></span>10 &mdash; Governance</div>
+<h2 class="reveal">Fork rights from the start</h2>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> The architectural backstop
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>Fork rights are declared from the start. The data is CC-BY-SA. The parameters are open. The protocol is open source. Anyone can take the commons, apply different merge rules, and run a different institution on the same intelligence.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> How governance develops
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p><strong>Now:</strong> The founding team makes all editorial decisions. Acknowledged, not hidden. All parameters committed to git with rationale.</p>
+      <p><strong>Trust-based auto-merge (launch):</strong> New contributors start reviewed. Track record earns auto-merge. A profile field, not a committee.</p>
+      <p><strong>Contributor feedback (post-Basel):</strong> Contributors flag disagreements. Flags aggregate. At threshold, they trigger review with a public response.</p>
+      <p><strong>Formal contestation (50+ contributors):</strong> Documented challenge process. Rotating review group including contributors from outside the founding team.</p>
+      <p><strong>Governance transition trigger:</strong> 200 active contributors OR 2 years, whichever comes first. Review is binding. Founding team authority structurally constrained. Contributors vote on processing rules, not individual signals.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Growth model: orbital accretion
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>A(DAI) does not launch &mdash; it accretes. Mass forms at centre first.</p>
+      <table class="styled-table">
+        <thead><tr><th>Orbit</th><th>Size</th><th>Who</th><th>Threshold to open next</th></tr></thead>
+        <tbody>
+          <tr><td><strong>0 &mdash; Core</strong></td><td>~10</td><td>Founding team</td><td>Prototype live, graph queryable</td></tr>
+          <tr><td><strong>1 &mdash; First light</strong></td><td>~50&ndash;100</td><td>Pioneering practitioners, founding partners</td><td>20+ practitioner contributions processed, narrative generation working</td></tr>
+          <tr><td><strong>2 &mdash; Inner ring</strong></td><td>~500</td><td>Broader practitioner community</td><td>Interpretive diversity healthy, 3+ scenes forming</td></tr>
+          <tr><td><strong>3 &mdash; Outer ring</strong></td><td>~5,000</td><td>Curators, researchers, emerging practitioners</td><td>Federation protocol live, governance transition review triggered</td></tr>
+          <tr><td><strong>4 &mdash; Open field</strong></td><td>Unlimited</td><td>General public</td><td>Gravitational centres robust enough to absorb anonymous contribution</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ 11 SKILLS FILES ============ -->
+<div class="sec-head reveal" id="skills"><span class="dot" style="color:var(--sky)"></span>11 &mdash; Skills Files</div>
+<h2 class="reveal">Context, not documentation</h2>
+
+<p class="reveal">Skills files are not documentation &mdash; they are context that must be read and passed in Claude API calls. If they're not injected, they do nothing.</p>
+
+<pre class="reveal"><code>/skills/
+  tendency-vocabulary.md    # The evaluative vocabulary
+  cla-extraction.md         # CLA framework for signal processing
+  scout-editorial.md        # Scout agent editorial brief</code></pre>
+
+<p class="reveal"><strong>Status:</strong> None written yet. This is the highest-priority gap for the processing pipeline.</p>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Core rules
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <ol class="principles-list">
+        <li><strong>Judgment in skills, not Python.</strong> If code is making linking decisions via string matching, that's judgment in the wrong place.</li>
+        <li><strong>Skills must be injected.</strong> Read and pass as context in every Claude API call.</li>
+        <li><strong>Context before execution.</strong> Every pipeline run should know its own state.</li>
+        <li><strong>Frontier signals are the point.</strong> Every signal exits with explicit status: <code>processed</code> | <code>concept_linked</code> | <code>frontier</code> | <code>error</code>.</li>
+        <li><strong>Processing traces are mandatory.</strong> Every signal carries what was extracted, rejected, and at what confidence.</li>
+        <li><strong>Ouroboros defence.</strong> Source origin typing. Raw practitioner voice is the highest-value signal.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Tendency axes
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>Evaluative dimensions, not categories:</p>
+      <div class="axes-grid">
+        <div class="axis-item">openness <span class="arrow">&harr;</span> enclosure</div>
+        <div class="axis-item">commons <span class="arrow">&harr;</span> capture</div>
+        <div class="axis-item">spectacle <span class="arrow">&harr;</span> infrastructure</div>
+        <div class="axis-item">individual <span class="arrow">&harr;</span> collective</div>
+        <div class="axis-item">attention <span class="arrow">&harr;</span> intention</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ 12 CURRENT STATE ============ -->
+<div class="sec-head reveal" id="state"><span class="dot" style="color:#ff6b6b"></span>12 &mdash; Current State</div>
+<h2 class="reveal">April 2026</h2>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> What's live
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <p>CR-SQLite backend (Gio, Shards) deployed at <a href="https://adai-basel.fly.dev" target="_blank">adai-basel.fly.dev</a>. 774 nodes, 929 edges (3 types: PRACTICES 284, BELONGS_TO 366, RELATED_TO 279). Contribution flow, curator review queue, practitioner profiles, data export. Single-DB deployment.</p>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> What's in progress
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <ul>
+        <li><strong>Piyush:</strong> Particle/gravitational visualisations, brand system, generative landing page &rarr; deploying on Netlify</li>
+        <li><strong>Iri:</strong> North Star article for Substack, identifying 10&ndash;15 signal sources for public layer, value-based framework for scout agents</li>
+        <li><strong>Gio:</strong> Available from April 9 (Sicily, Europe timezone). Merging branch to main, creating Claude skill for repo, exploring public layer data collection</li>
+        <li><strong>JB:</strong> Artist relations, LLM interview concept (under evaluation), sourcing archivists</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="collapsible open reveal">
+  <button class="collapsible-toggle" onclick="this.parentElement.classList.toggle('open')">
+    <span class="chevron">&#9654;</span> Critical gaps
+  </button>
+  <div class="collapsible-body">
+    <div class="collapsible-inner">
+      <ol class="principles-list">
+        <li><strong>Artwork nodes do not exist.</strong> 774 nodes, 0 artworks. The graph, the narrative engine, and the visual interface all depend on artworks.</li>
+        <li><strong>Only 3 edge types in use.</strong> Need CREATED_BY, EXHIBITED_AT, COLLABORATES_WITH minimum before the graph reads as more than co-occurrence.</li>
+        <li><strong>Editorial guidance docs unwritten.</strong> Highest-risk gap. Without them, Claude's defaults flatten the vocabulary. Skills files must be authored and injected.</li>
+        <li><strong>No authentication system.</strong> Critical if practitioners are onboarded live.</li>
+        <li><strong>Geographic intake bias.</strong> 47 of 59 practitioners are North American/European.</li>
+        <li><strong>Signal sources not yet identified.</strong> Iri's task &mdash; 10&ndash;15 validated sources for the public layer.</li>
+        <li><strong>Frontend not connected to backend.</strong> Connection work starts April 9+.</li>
+        <li><strong>Consent fields not in db.sql.</strong> Needed before onboarding practitioners under restricted terms.</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============ 13 QUALITY TESTS ============ -->
+<div class="sec-head reveal" id="quality"><span class="dot" style="color:#ff6b6b"></span>13 &mdash; Quality Tests</div>
+<h2 class="reveal">If any of these are true, the system is failing</h2>
+
+<ul class="quality-list reveal">
+  <li>No frontier signals visible &rarr; merge boundary too tight</li>
+  <li>Every auto-merge confirms the founding team's map &rarr; system mirrors its founders</li>
+  <li>The narrative sounds the same every session &rarr; the generative interface isn't generative</li>
+  <li>500 nodes, 3 edge types &rarr; semantic layer is cosmetic</li>
+  <li>Graph has practitioners but no artworks &rarr; directory, not a canon</li>
+  <li>Nobody asks for a different perspective &rarr; the system isn't provoking curiosity</li>
+  <li>Visitors can't tell what the system left out &rarr; the partiality isn't honest</li>
+  <li>Artworks are present but have no edges &rarr; illustrations, not first-class nodes</li>
+  <li>No contribution receipt &rarr; system takes without showing what it did</li>
+  <li>People listen but never speak &rarr; interaction model isn't inviting challenge</li>
+  <li>Challenges always get agreeable responses &rarr; anti-sycophancy has failed</li>
+</ul>
+
+
+<!-- ============ 14 DOCUMENT HIERARCHY ============ -->
+<div class="sec-head reveal" id="hierarchy"><span class="dot" style="color:var(--text-dim)"></span>14 &mdash; Document Hierarchy</div>
+<h2 class="reveal">Source of truth stack</h2>
+
+<ol class="doc-list reveal">
+  <li><strong>This seed document (v4.0)</strong> &mdash; the living specification. Architecture, principles, typed edges, merge boundary, gravity model, trust model, gap table.</li>
+  <li><strong>CLAUDE.md</strong> &mdash; the authoritative project reference for development. Updated April 2026. Synthesises all current decisions.</li>
+  <li><strong>North Star</strong> (Notion) &mdash; the public-facing articulation for Substack.</li>
+  <li><strong>Design Brief: How the Backend Shapes the Frontend</strong> (Notion) &mdash; what the backend means for design, what can be built now vs later.</li>
+  <li><strong>Agentic Risk Map</strong> (Notion) &mdash; 12 failure modes mapped to A(DAI) with priority actions.</li>
+  <li><strong>adaiconceptpaper.pdf</strong> &mdash; Iri's foundational vision. Authoritative on thesis and positioning.</li>
+  <li><strong>adai_living_graph_spec.pdf</strong> &mdash; JB's living graph spec. Audio interaction model = current reference. Architecture = historical.</li>
+  <li><strong>Backend &amp; Storage Idea</strong> (Notion) &mdash; Gio's CR-SQLite Matryoshka proposal.</li>
+</ol>
+
+
+<!-- ============ 15 STACK ============ -->
+<div class="sec-head reveal" id="stack"><span class="dot" style="color:var(--sky)"></span>15 &mdash; Stack</div>
+<h2 class="reveal">Technology</h2>
+
+<p class="reveal">CR-SQLite (Gio's C port), Shards (HTTP server + scripting), Python (pipeline scripts), Anthropic API (Claude &mdash; processing, classification, narrative generation, query), Gemini Embedding 2 (embeddings &mdash; future), Fly.io (backend &mdash; adai-basel.fly.dev), Netlify (landing page &mdash; Piyush), Docker (deployment), D3 (graph visualisation &mdash; starting point), TouchDesigner (particle/gravitational viz &mdash; Piyush). TTS and transcription providers TBD (post-foundation).</p>
+
+
+<!-- ============ 16 TEAM ============ -->
+<div class="sec-head reveal" id="team"><span class="dot" style="color:var(--mint)"></span>16 &mdash; Team</div>
+<h2 class="reveal">Core team</h2>
+
+<div class="grid-2 reveal">
+  <div class="card">
+    <div class="card-label">Strategy &amp; editorial</div>
+    <div class="card-title">Iri</div>
+    <div class="card-desc">Strategy, editorial, signal source curation, value framework for agents, build coordination</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Market development</div>
+    <div class="card-title">JB</div>
+    <div class="card-desc">Market development, artist relations, sensing conversations, LLM interview concept</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Backend architecture</div>
+    <div class="card-title">Gio</div>
+    <div class="card-desc">Backend architecture, CR-SQLite, protocol, public layer data collection</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Frontend &amp; design</div>
+    <div class="card-title">Piyush</div>
+    <div class="card-desc">Frontend, generative landing page, brand system, particle/gravitational visualisation</div>
+  </div>
+</div>
+
+
+<!-- ============ CHANGELOG ============ -->
+<div class="sec-head reveal" id="changelog"><span class="dot" style="color:var(--text-dim)"></span>Changelog</div>
+<h2 class="reveal">Version history</h2>
+
+<div class="timeline reveal">
+  <div class="timeline-entry">
+    <div class="timeline-version">v4.0</div>
+    <div class="timeline-date">2026-04-03</div>
+    <div class="timeline-body">
+      <p><strong>Strategic pivot:</strong> Four-room Basel model replaced by three-layer prototype (generative landing page + public data layer + intimate layer). The rooms were an interaction model; the layers are a build sequence. Plants grow from roots.</p>
+      <p><strong>Mode 2 dropped.</strong> There is no advisory services layer. The commons is the product. Period.</p>
+      <p><strong>Two data layers formalised.</strong> Public (crawled from open sources, agent-classified, confidence: medium) and Intimate (practitioner input, lived experience, confidence: high). Both flow through the same backend.</p>
+      <p><strong>Audio layer post-foundation.</strong> Voice input, TTS, pause-and-challenge &mdash; still the vision, but only built once data layers, protocol, and graph density are solid.</p>
+      <p><strong>Agentic risk map.</strong> 12 risks from "Agents of Chaos" paper mapped to A(DAI) architecture. GDPR erasure identified as legal requirement conflicting with "never delete" principle.</p>
+      <p><strong>LLM interviews under evaluation.</strong> JB proposed LLM-conducted interviews. Critical caveat: needs human-in-the-loop. Not confirmed.</p>
+      <p><strong>Aesthetic direction.</strong> Piyush building particle/gravitational visualisations. Design explicitly connected to North Star principles.</p>
+      <p><strong>Sensing loop.</strong> Tidal rhythms (6h/24h/72h) moved from commitment to hypothesis. Primary sensing rhythm is the interaction itself.</p>
+      <p><strong>Workstreams.</strong> 12-week parallel workstream timeline removed. Replaced by three-layer prototype sequencing.</p>
+      <p><strong>Basel.</strong> No longer scoped as four rooms. Basel is where we show the product if timing aligns.</p>
+    </div>
+  </div>
+
+  <div class="timeline-entry minor">
+    <div class="timeline-version">v3.1</div>
+    <div class="timeline-date">2026-03-25</div>
+    <div class="timeline-body">Field research integration. Basel scope revision (5&rarr;4 rooms). Agent scaffolding. Processing traces. External calibration. Anticipatory sensing. Interoperability targets. Consent policy. Mode 2 use cases.</div>
+  </div>
+
+  <div class="timeline-entry minor">
+    <div class="timeline-version">v3.0</div>
+    <div class="timeline-date">2026-03-24</div>
+    <div class="timeline-body">Combined Design Brief v2.2 and Garden Logic v1.0 into single source of truth.</div>
+  </div>
+
+  <div class="timeline-entry minor">
+    <div class="timeline-version">v2.2</div>
+    <div class="timeline-date">2026-03-20</div>
+    <div class="timeline-body">Agent-native backend and practitioner agents.</div>
+  </div>
+
+  <div class="timeline-entry minor">
+    <div class="timeline-version">v2.1</div>
+    <div class="timeline-date">2026-03-19</div>
+    <div class="timeline-body">Artworks as first-class nodes.</div>
+  </div>
+
+  <div class="timeline-entry minor">
+    <div class="timeline-version">v2.0</div>
+    <div class="timeline-date">2026-03-19</div>
+    <div class="timeline-body">Conversations as primary signal. Sense room as centrepiece. Governance architecture. CC-BY-SA.</div>
+  </div>
+
+  <div class="timeline-entry minor">
+    <div class="timeline-version">v1.0</div>
+    <div class="timeline-date">2026-03-19</div>
+    <div class="timeline-body">Initial versioned brief.</div>
+  </div>
+</div>
+
+<p class="reveal" style="margin-top:3rem; font-family:var(--font-mono); font-size:0.56rem; text-transform:uppercase; letter-spacing:0.22em; color:var(--text-dim); text-align:center; padding: 2rem 0; border-top: 1px solid var(--border);">
+  A(DAI) &mdash; Seed Document v4.0 &mdash; CC-BY-SA 4.0 &mdash; The project builds in public
 </p>
-
-<!-- Server architecture Mermaid -->
-<section class="diagram-shell anim" style="--i:14.8">
-  <p class="diagram-shell__hint">Ctrl/Cmd + wheel to zoom &middot; Scroll to pan &middot; Double-click to fit</p>
-  <div class="mermaid-wrap">
-    <div class="zoom-controls">
-      <button type="button" data-action="zoom-in" title="Zoom in">+</button>
-      <button type="button" data-action="zoom-out" title="Zoom out">&minus;</button>
-      <button type="button" data-action="zoom-fit" title="Smart fit">&#8634;</button>
-      <button type="button" data-action="zoom-one" title="1:1 zoom">1:1</button>
-      <button type="button" data-action="zoom-expand" title="Open full size">&#x26F6;</button>
-      <span class="zoom-label">Loading...</span>
-    </div>
-    <div class="mermaid-viewport">
-      <div class="mermaid mermaid-canvas"></div>
-    </div>
-  </div>
-  <script type="text/plain" class="diagram-source">
-    graph TD
-      SEED["seed.shs<br/>59 JSON research files"] --> DB[("adai.db<br/>CR-SQLite")]
-      HTTP["HTTP :8080"] --> ROUTER["server.shs<br/>14 handlers"]
-      ROUTER --> DB
-      ROUTER --> EXPLORE["/explore<br/>Browse nodes"]
-      ROUTER --> PROFILE["/practitioner/:slug<br/>Full profile + edges"]
-      ROUTER --> GRAPH["/graph<br/>D3 force visualization"]
-      ROUTER --> CONTRIB["/contribute<br/>Signal submission"]
-      ROUTER --> REVIEW["/review<br/>Intake queue"]
-      CONTRIB --> TRUST{"Trust tier?"}
-      TRUST -->|high| AUTO["Auto-approve"]
-      TRUST -->|low/unverified| QUEUE["Pending review"]
-      AUTO --> DB
-      QUEUE --> REVIEW
-  </script>
-</section>
-
-<!-- Database Schema -->
-<div class="card-label anim" style="--i:15; color:var(--navy); margin-bottom:12px;">Database Schema</div>
-
-<div class="grid-2 anim" style="--i:15.1; margin-bottom:12px;">
-  <div class="schema-card">
-    <div class="schema-name"><span class="schema-badge badge-crr">CRR</span> nodes</div>
-    <div class="schema-cols">
-      <span class="pk">id</span> TEXT PK &middot; type &middot; name &middot; slug<br>
-      metadata (JSON blob) &middot; created_at &middot; updated_by
-    </div>
-  </div>
-  <div class="schema-card">
-    <div class="schema-name"><span class="schema-badge badge-crr">CRR</span> edges</div>
-    <div class="schema-cols">
-      <span class="pk">id</span> TEXT PK &middot; <span class="fk">source_id</span> &middot; <span class="fk">target_id</span><br>
-      edge_type &middot; <span class="fk">signal_id</span> &middot; confidence &middot; charge
-    </div>
-  </div>
-</div>
-<div class="grid-2 anim" style="--i:15.2; margin-bottom:12px;">
-  <div class="schema-card">
-    <div class="schema-name"><span class="schema-badge badge-crr">CRR</span> signals</div>
-    <div class="schema-cols">
-      <span class="pk">id</span> TEXT PK &middot; title &middot; source_url &middot; source_type<br>
-      summary &middot; content &middot; submitted_by &middot; confidence<br>
-      lived_experience (bool) &middot; cla_layer
-    </div>
-  </div>
-  <div class="schema-card">
-    <div class="schema-name"><span class="schema-badge badge-crr">CRR</span> contributors</div>
-    <div class="schema-cols">
-      <span class="pk">id</span> TEXT PK &middot; name &middot; type &middot; trust_tier<br>
-      contributions (count) &middot; approved_count
-    </div>
-  </div>
-</div>
-<div class="grid-2 anim" style="--i:15.3; margin-bottom:20px;">
-  <div class="schema-card">
-    <div class="schema-name"><span class="schema-badge badge-local">Local</span> intake_queue</div>
-    <div class="schema-cols">
-      <span class="pk">id</span> TEXT PK &middot; <span class="fk">signal_id</span> &middot; <span class="fk">target_node</span><br>
-      status (pending/approved/rejected) &middot; reviewed_by<br>
-      proposed_nodes (JSON) &middot; proposed_edges (JSON)
-    </div>
-  </div>
-  <div class="schema-card">
-    <div class="schema-name"><span class="schema-badge badge-local">Local</span> settings</div>
-    <div class="schema-cols">
-      <span class="pk">key</span> TEXT PK &middot; value TEXT<br>
-      <span style="opacity:0.5">Currently: db_version = '1'</span>
-    </div>
-  </div>
-</div>
-
-<!-- Trust / Merge Pipeline -->
-<div class="card-label anim" style="--i:15.4; color:var(--terracotta); margin-bottom:12px;">Trust &amp; Merge Boundary</div>
-
-<div class="trust-flow anim" style="--i:15.5; margin-bottom:20px;">
-  <div class="trust-step" style="border-color:var(--sage-dim)">
-    <div class="trust-step-name">Submit</div>
-    <div class="trust-step-detail">/api/contribute</div>
-  </div>
-  <div class="trust-arrow">&rarr;</div>
-  <div class="trust-step">
-    <div class="trust-step-name">Create Signal</div>
-    <div class="trust-step-detail">signals table</div>
-  </div>
-  <div class="trust-arrow">&rarr;</div>
-  <div class="trust-step" style="border-color:var(--gold-dim)">
-    <div class="trust-step-name">Lookup Trust</div>
-    <div class="trust-step-detail">contributors.trust_tier</div>
-  </div>
-  <div class="trust-arrow">&rarr;</div>
-  <div class="trust-step" style="border-color:var(--sage-dim); background:var(--sage-dim)">
-    <div class="trust-step-name">High</div>
-    <div class="trust-step-detail">auto-approve</div>
-  </div>
-  <div class="trust-arrow" style="margin-left:-4px">|</div>
-  <div class="trust-step" style="border-color:var(--terracotta-dim); background:var(--terracotta-dim)">
-    <div class="trust-step-name">Low / Unverified</div>
-    <div class="trust-step-detail">intake_queue &rarr; /review</div>
-  </div>
-</div>
-
-<!-- Edge Implementation Status -->
-<div class="card-label anim" style="--i:15.6; color:var(--sage); margin-bottom:12px;">Edge Type Implementation Status</div>
-
-<div class="anim" style="--i:15.7; margin-bottom:20px; overflow-x:auto;">
-  <table class="edge-table">
-    <thead>
-      <tr><th>Edge Type</th><th>Status</th><th>Current Count</th></tr>
-    </thead>
-    <tbody>
-      <tr><td><span class="edge-type">PRACTICES</span></td><td><span class="impl-status status-live">Seeded</span></td><td>284 edges</td></tr>
-      <tr><td><span class="edge-type">BELONGS_TO</span></td><td><span class="impl-status status-live">Seeded</span></td><td>366 edges</td></tr>
-      <tr><td><span class="edge-type">RELATED_TO</span></td><td><span class="impl-status status-live">Seeded</span></td><td>279 edges</td></tr>
-      <tr><td><span class="edge-type">COLLABORATES_WITH</span></td><td><span class="impl-status status-designed">Designed</span></td><td>&mdash;</td></tr>
-      <tr><td><span class="edge-type">EXHIBITED_AT</span></td><td><span class="impl-status status-designed">Designed</span></td><td>&mdash;</td></tr>
-      <tr><td><span class="edge-type">EMBODIES</span></td><td><span class="impl-status status-planned">Needs Artworks</span></td><td>&mdash;</td></tr>
-      <tr><td><span class="edge-type">RESPONDS_TO</span></td><td><span class="impl-status status-planned">Needs Artworks</span></td><td>&mdash;</td></tr>
-      <tr><td><span class="edge-type">TENSION_WITH</span></td><td><span class="impl-status status-designed">Designed</span></td><td>&mdash;</td></tr>
-      <tr><td><span class="edge-type">PIONEERED</span></td><td><span class="impl-status status-designed">Designed</span></td><td>&mdash;</td></tr>
-      <tr><td><span class="edge-type">INFLUENCES</span></td><td><span class="impl-status status-designed">Designed</span></td><td>&mdash;</td></tr>
-      <tr><td><span class="edge-type">CREATED_BY</span></td><td><span class="impl-status status-planned">Needs Artworks</span></td><td>&mdash;</td></tr>
-      <tr><td><span class="edge-type">USES_TECHNIQUE</span></td><td><span class="impl-status status-planned">Needs Artworks</span></td><td>&mdash;</td></tr>
-    </tbody>
-  </table>
-</div>
-
-<!-- Server Modules -->
-<div class="card-label anim" style="--i:15.8; color:var(--plum); margin-bottom:12px;">Server Modules (Shards)</div>
-
-<div class="file-grid anim" style="--i:15.9; margin-bottom:20px;">
-  <div class="file-card" style="border-left-color:var(--sage)">
-    <div class="file-name">run.shs</div>
-    <div class="file-desc">Entry point. Loads CR-SQLite extension, runs schema, starts server at 15 FPS mesh.</div>
-  </div>
-  <div class="file-card" style="border-left-color:var(--navy)">
-    <div class="file-name">server.shs</div>
-    <div class="file-desc">All HTTP routing + 14 handler wires. GET/POST dispatch via Cond matching.</div>
-    <div class="file-lines">1,193 lines</div>
-  </div>
-  <div class="file-card" style="border-left-color:var(--terracotta)">
-    <div class="file-name">server-base.shs</div>
-    <div class="file-desc">Shared defines: DB path, CORS headers, full inline CSS, HTML escape, page template.</div>
-  </div>
-  <div class="file-card" style="border-left-color:var(--gold)">
-    <div class="file-name">seed.shs</div>
-    <div class="file-desc">Migration script. Reads 59 JSON research files, creates nodes + edges with provenance.</div>
-  </div>
-  <div class="file-card" style="border-left-color:var(--plum)">
-    <div class="file-name">db.sql</div>
-    <div class="file-desc">Schema DDL. 4 CRR tables + 2 local tables. Indexes on slug, type, source, target, composite.</div>
-  </div>
-  <div class="file-card" style="border-left-color:var(--teal)">
-    <div class="file-name">entrypoint.sh</div>
-    <div class="file-desc">Docker entrypoint. Seed on first boot, then start server. Volume at /data.</div>
-  </div>
-</div>
-
-<!-- CRDT Sync Status -->
-<div class="callout anim" style="--i:16; margin-bottom:20px; border-left-color:var(--navy)">
-  <strong>CR-SQLite CRDT layer.</strong> All 4 primary tables marked as CRR via <code style="font-family:var(--font-mono);font-size:11px;background:var(--navy-dim);color:var(--navy);padding:1px 5px;border-radius:3px;">crsql_as_crr()</code>. Per-column version vectors enable last-writer-wins merge. Sync endpoints (<code style="font-family:var(--font-mono);font-size:11px;background:var(--navy-dim);color:var(--navy);padding:1px 5px;border-radius:3px;">crsql_changes</code> GET/POST) designed but not yet implemented&mdash;tables are merge-ready, awaiting multi-node deployment.
-</div>
-
-</div><!-- /impl-nest -->
-
-<!-- ===== 5. THE ROOMS ===== -->
-<div id="s5" class="sec-head anim" style="--i:15">
-  <span class="dot" style="background:var(--plum)"></span> 05 &mdash; The Rooms
-</div>
-
-<h2 class="anim" style="--i:16">Basel Launch Rooms</h2>
-<div class="rooms-grid anim" style="--i:17; margin-bottom:24px;">
-
-  <div class="room-card" style="border-top-color:var(--navy)">
-    <div class="room-num" style="color:var(--navy)">ROOM 01</div>
-    <div class="room-name">Sense</div>
-    <div class="room-vibe">Slow, high-density, breathing rhythm</div>
-    <div class="room-desc">3D relational positioning of artworks and practitioners. Conversation fragments surface over artwork.</div>
-    <div class="room-generates"><strong>Generates:</strong> ambient signal, presence data</div>
-  </div>
-
-  <div class="room-card" style="border-top-color:var(--terracotta)">
-    <div class="room-num" style="color:var(--terracotta)">ROOM 02</div>
-    <div class="room-name">Query</div>
-    <div class="room-vibe">Sharp, high-contrast, tension interface</div>
-    <div class="room-desc">10&ndash;15 graph-derived provocations invite visitor answers. Responses add mass to tensions rather than resolve them.</div>
-    <div class="room-generates"><strong>Generates:</strong> tension edges, disagreement-as-mass</div>
-  </div>
-
-  <div class="room-card" style="border-top-color:var(--sage)">
-    <div class="room-num" style="color:var(--sage)">ROOM 03</div>
-    <div class="room-name">Contribute</div>
-    <div class="room-vibe">Warm, invitational structure</div>
-    <div class="room-desc">Generative subgraph reading and gap identification. Contributions show relational receipts.</div>
-    <div class="room-generates"><strong>Generates:</strong> new nodes, unclassifiable language</div>
-  </div>
-
-  <div class="room-card" style="border-top-color:var(--gold)">
-    <div class="room-num" style="color:var(--gold)">ROOM 04</div>
-    <div class="room-name">Connect</div>
-    <div class="room-vibe">Open, minimal, emergent</div>
-    <div class="room-desc">Lightweight practitioner identity. Named tension threads anchored to nodes.</div>
-    <div class="room-generates"><strong>Generates:</strong> collaboration edges, social infrastructure</div>
-  </div>
-
-</div>
-
-<h2 class="anim" style="--i:18">Post-Basel Rooms</h2>
-<div class="grid-2 anim" style="--i:19; margin-bottom:20px;">
-
-  <div class="room-card" style="border-top-color:var(--teal)">
-    <div class="room-num" style="color:var(--teal)">ROOM 05</div>
-    <div class="room-name">Experiment</div>
-    <div class="room-vibe">Sparse frontier canvas</div>
-    <div class="room-desc">Low-signal embedding space. Agent-native environment for practice-based node creation.</div>
-    <div class="room-generates"><strong>Generates:</strong> new nodes from practice</div>
-  </div>
-
-  <div class="room-card" style="border-top-color:var(--plum)">
-    <div class="room-num" style="color:var(--plum)">ROOM 06</div>
-    <div class="room-name">Speculate</div>
-    <div class="room-vibe">Layered typographic narrative</div>
-    <div class="room-desc">Editable manifesto from tendency vocabulary. Vocabulary-shift proposals.</div>
-    <div class="room-generates"><strong>Generates:</strong> frontier language, vocabulary signal</div>
-  </div>
-
-</div>
-
-<!-- ===== 6. SENSING LOOP ===== -->
-<div id="s6" class="sec-head anim" style="--i:20">
-  <span class="dot" style="background:var(--teal)"></span> 06 &mdash; Tidal Sensing Loop
-</div>
-
-<p class="card-desc anim" style="--i:21; margin-bottom:20px; max-width:680px;">
-  Tidal rhythm&mdash;not continuous, on-demand, or real-time. Three nested cycles detect different scales of signal, plus external calibration and rapid-response interrupts.
-</p>
-
-<div class="tidal anim" style="--i:22; margin-bottom:20px;">
-  <div class="tidal-marker">
-    <div class="tidal-dot" style="background:var(--sage)">6h</div>
-  </div>
-  <div class="tidal-content">
-    <div class="tidal-name">The Pulse</div>
-    <div class="tidal-sub">Lightweight metric scan. Flags orphans, imbalances, stale nodes, interpretive diversity gaps. Output: intention gap report.</div>
-  </div>
-
-  <div class="tidal-marker">
-    <div class="tidal-dot" style="background:var(--navy)">24h</div>
-  </div>
-  <div class="tidal-content">
-    <div class="tidal-name">The Survey</div>
-    <div class="tidal-sub">Topological analysis&mdash;clusters, bridges, structural holes. Artwork clustering and contribution patterns. Output: intention observations.</div>
-  </div>
-
-  <div class="tidal-marker">
-    <div class="tidal-dot" style="background:var(--plum)">72h</div>
-  </div>
-  <div class="tidal-content">
-    <div class="tidal-name">The Dream</div>
-    <div class="tidal-sub">Consolidates lived experience, tendency vocabulary, counter-signals. Field-level question formation. Output: generative prompts.</div>
-  </div>
-</div>
-
-<div class="grid-2 anim" style="--i:23; margin-bottom:20px;">
-  <div class="ve-card ve-card--recessed">
-    <div class="card-label" style="color:var(--terracotta)">External Calibration</div>
-    <div class="card-desc">Quarterly blind spot audits against festival submissions, platform data, institutional records.</div>
-  </div>
-  <div class="ve-card ve-card--recessed">
-    <div class="card-label" style="color:var(--terracotta)">Rapid-Response Interrupts</div>
-    <div class="card-desc">Category-level disruptions escalate in hours. Automated post-Basel.</div>
-  </div>
-</div>
-
-<!-- ===== 7. ARCHITECTURE ===== -->
-<div id="s7" class="sec-head anim" style="--i:24">
-  <span class="dot" style="background:var(--navy)"></span> 07 &mdash; Architecture
-</div>
-
-<div class="callout anim" style="--i:24.5; margin-bottom:16px; border-left-color:var(--gold);">
-  <strong>Current state: single DB.</strong> Basel MVP runs one <code style="font-family:var(--font-mono);font-size:11px;background:var(--gold-dim);color:var(--gold);padding:1px 5px;border-radius:3px;">adai.db</code> on Fly.io Frankfurt. Schema is migration-ready for the split&mdash;node IDs map deterministically to DB files. <code style="font-family:var(--font-mono);font-size:11px;background:var(--navy-dim);color:var(--navy);padding:1px 5px;border-radius:3px;">ATTACH DATABASE</code> planned for cross-DB queries (limit ~10 per query).
-</div>
-
-<div class="grid-3 anim" style="--i:25; margin-bottom:20px;">
-  <div class="ve-card" style="border-top:3px solid var(--sage)">
-    <div class="card-label" style="color:var(--sage)"><span class="impl-status status-planned" style="margin-right:4px">Planned</span> Layer 1</div>
-    <div class="card-title">Practitioner DB</div>
-    <div class="card-desc">1 file per practitioner. All signals, edges, metadata, full provenance. Portable&mdash;"give me my data" = hand them a .db file.</div>
-  </div>
-  <div class="ve-card" style="border-top:3px solid var(--navy)">
-    <div class="card-label" style="color:var(--navy)"><span class="impl-status status-planned" style="margin-right:4px">Planned</span> Layer 2</div>
-    <div class="card-title">Scene DB</div>
-    <div class="card-desc">1 per scene (e.g. "Berlin electronic music"). Index of practitioners, scene-level signals, materialized aggregates. References, not copies.</div>
-  </div>
-  <div class="ve-card" style="border-top:3px solid var(--gold)">
-    <div class="card-label" style="color:var(--gold)"><span class="impl-status status-live" style="margin-right:4px">Live</span> Layer 3</div>
-    <div class="card-title">Field DB</div>
-    <div class="card-desc">Currently the only layer. Single adai.db with CR-SQLite CRDT extension. 774 nodes, 929 edges, deployed on Fly.io fra region.</div>
-  </div>
-</div>
-
-<div class="callout anim" style="--i:26; margin-bottom:20px;">
-  <strong>Ouroboros defense.</strong> Cycle detection against system-generated feedback loops. Source-origin typing from <code style="font-family:var(--font-mono);font-size:11px;background:var(--navy-dim);color:var(--navy);padding:1px 5px;border-radius:3px;">human_primary</code> through <code style="font-family:var(--font-mono);font-size:11px;background:var(--navy-dim);color:var(--navy);padding:1px 5px;border-radius:3px;">ai_generated</code>. Raw practitioner voice is highest-value signal.
-</div>
-
-<div class="anim" style="--i:27; margin-bottom:20px;">
-  <div class="card-label" style="color:var(--teal); margin-bottom:12px;">Interoperability Targets</div>
-  <div class="metrics">
-    <div class="metric-pill"><div class="metric-name">Getty AAT/ULAN</div><div class="metric-desc">Institutional legibility</div></div>
-    <div class="metric-pill"><div class="metric-name">Wikidata</div><div class="metric-desc">Commons expansion</div></div>
-    <div class="metric-pill"><div class="metric-name">C2PA</div><div class="metric-desc">Content Credentials</div></div>
-    <div class="metric-pill"><div class="metric-name">IPFS CIDs</div><div class="metric-desc">Content-addressed media</div></div>
-  </div>
-</div>
-
-<!-- ===== 8. BASEL TIMELINE ===== -->
-<div id="s8" class="sec-head anim" style="--i:28">
-  <span class="dot" style="background:var(--gold)"></span> 08 &mdash; Art Basel Production Schedule
-</div>
-
-<p class="card-desc anim" style="--i:29; margin-bottom:16px;">12 weeks to June 16&ndash;22, 2026. Seven parallel workstreams &mdash; not phases. Content, infrastructure, coordination and communication run concurrently.</p>
-
-<div class="ws-container anim" style="--i:30; margin-bottom:20px;">
-  <!-- Week header -->
-  <div class="ws-header">
-    <div></div>
-    <div class="ws-weeks">
-      <div class="ws-week-label">1</div><div class="ws-week-label">2</div><div class="ws-week-label">3</div>
-      <div class="ws-week-label">4</div><div class="ws-week-label">5</div><div class="ws-week-label">6</div>
-      <div class="ws-week-label">7</div><div class="ws-week-label">8</div><div class="ws-week-label">9</div>
-      <div class="ws-week-label">10</div><div class="ws-week-label">11</div><div class="ws-week-label ws-basel">BASEL</div>
-    </div>
-  </div>
-
-  <!-- 1. Recording conversations -->
-  <div class="ws-row ws-color-1">
-    <div class="ws-num">01</div>
-    <div class="ws-info">
-      <span class="ws-name">Recording conversations</span>
-      <span class="ws-owner">JB</span>
-      <div class="ws-bar-track">
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. Backend + embeddings -->
-  <div class="ws-row ws-color-2">
-    <div class="ws-num">02</div>
-    <div class="ws-info">
-      <span class="ws-name">Backend &amp; embeddings</span>
-      <span class="ws-owner">Gio</span>
-      <div class="ws-bar-track">
-        <div class="ws-bar-cell ws-bar-cell--blocked"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell"></div><div class="ws-bar-cell"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 3. Graph data input -->
-  <div class="ws-row ws-color-3">
-    <div class="ws-num">03</div>
-    <div class="ws-info">
-      <span class="ws-name">Input data into the graph</span>
-      <span class="ws-owner">Iri + JB</span>
-      <div class="ws-bar-track">
-        <div class="ws-bar-cell ws-bar-cell--blocked"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div>
-      </div>
-    </div>
-  </div>
-  <!-- 3a -->
-  <div class="ws-row ws-row--sub ws-color-3">
-    <div class="ws-num">3a</div>
-    <div class="ws-info">
-      <span class="ws-name">Conversations</span>
-      <div class="ws-bar-track">
-        <div class="ws-bar-cell"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div>
-      </div>
-    </div>
-  </div>
-  <!-- 3b -->
-  <div class="ws-row ws-row--sub ws-color-3">
-    <div class="ws-num">3b</div>
-    <div class="ws-info">
-      <span class="ws-name">Artworks</span>
-      <div class="ws-bar-track">
-        <div class="ws-bar-cell"></div><div class="ws-bar-cell"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-      </div>
-    </div>
-  </div>
-  <!-- 3c -->
-  <div class="ws-row ws-row--sub ws-color-3">
-    <div class="ws-num">3c</div>
-    <div class="ws-info">
-      <span class="ws-name">Agent-sourced data</span>
-      <div class="ws-bar-track">
-        <div class="ws-bar-cell"></div><div class="ws-bar-cell"></div><div class="ws-bar-cell"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 4. Front-end immersive UI -->
-  <div class="ws-row ws-color-4">
-    <div class="ws-num">04</div>
-    <div class="ws-info">
-      <span class="ws-name">Front-end immersive UI</span>
-      <span class="ws-owner">Piyush</span>
-      <div class="ws-bar-track">
-        <div class="ws-bar-cell"></div><div class="ws-bar-cell"></div><div class="ws-bar-cell"></div>
-        <div class="ws-bar-cell"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 5. Partnerships -->
-  <div class="ws-row ws-color-5">
-    <div class="ws-num">05</div>
-    <div class="ws-info">
-      <span class="ws-name">Partnerships &amp; coordination</span>
-      <span class="ws-owner">JB + Iri</span>
-      <div class="ws-bar-track">
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 6. Planning & logistics -->
-  <div class="ws-row ws-color-6">
-    <div class="ws-num">06</div>
-    <div class="ws-info">
-      <span class="ws-name">Basel planning &amp; logistics</span>
-      <span class="ws-owner">Iri</span>
-      <div class="ws-bar-track">
-        <div class="ws-bar-cell"></div><div class="ws-bar-cell"></div><div class="ws-bar-cell"></div>
-        <div class="ws-bar-cell"></div><div class="ws-bar-cell"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 7. Public comms -->
-  <div class="ws-row ws-color-7">
-    <div class="ws-num">07</div>
-    <div class="ws-info">
-      <span class="ws-name">Public communication</span>
-      <span class="ws-owner">All</span>
-      <div class="ws-bar-track">
-        <div class="ws-bar-cell"></div><div class="ws-bar-cell"></div><div class="ws-bar-cell"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div><div class="ws-bar-cell ws-bar-cell--active"></div>
-        <div class="ws-bar-cell ws-bar-cell--active"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== 9. DESIGN PRINCIPLES ===== -->
-<div id="s9" class="sec-head anim" style="--i:31">
-  <span class="dot" style="background:var(--sage)"></span> 09 &mdash; Design Principles
-</div>
-
-<div class="principles anim" style="--i:32; margin-bottom:20px;">
-  <div class="principle"><span class="principle-num">01</span> Intention over engagement</div>
-  <div class="principle"><span class="principle-num">02</span> Gravity, not hierarchy</div>
-  <div class="principle"><span class="principle-num">03</span> Frontier signals hold highest value</div>
-  <div class="principle"><span class="principle-num">04</span> Governance at the merge boundary</div>
-  <div class="principle"><span class="principle-num">05</span> Everything is prototype until field validates</div>
-  <div class="principle"><span class="principle-num">06</span> Provenance of meaning</div>
-  <div class="principle"><span class="principle-num">07</span> Deep time (10-year horizon)</div>
-  <div class="principle"><span class="principle-num">08</span> Two-way rooms (read/write same graph)</div>
-  <div class="principle"><span class="principle-num">09</span> Show work (traceable reasoning)</div>
-  <div class="principle"><span class="principle-num">10</span> Contribution feedback</div>
-  <div class="principle"><span class="principle-num">11</span> Build bridges (Getty, Wikidata, C2PA, IPFS)</div>
-  <div class="principle"><span class="principle-num">12</span> Listen first (conversation as intelligence)</div>
-  <div class="principle"><span class="principle-num">13</span> Artworks present (works held, not just words)</div>
-  <div class="principle"><span class="principle-num">14</span> Agent-native (agents as first-class actors)</div>
-  <div class="principle"><span class="principle-num">15</span> Coherence over consensus</div>
-  <div class="principle"><span class="principle-num">16</span> Sympoietic, not autopoietic</div>
-  <div class="principle"><span class="principle-num">17</span> Critique embedded in architecture</div>
-  <div class="principle"><span class="principle-num">18</span> Scaffolding over delegation</div>
-</div>
-
-<!-- ===== 10. GAP TABLE ===== -->
-<div id="s10" class="sec-head anim" style="--i:33">
-  <span class="dot" style="background:var(--terracotta)"></span> 10 &mdash; Gap Table
-</div>
-
-<div class="ve-card anim" style="--i:34; margin-bottom:20px;">
-  <div class="card-label" style="color:var(--sky)">To discuss — 27 Mar meeting</div>
-  <div class="gap-item"><span class="gap-status gap-discuss">DISCUSS</span><span class="gap-text">Processing pipeline transparency &rarr; trace field on every signal</span></div>
-  <div class="gap-item"><span class="gap-status gap-discuss">DISCUSS</span><span class="gap-text">Interoperability silence &rarr; Getty/Wikidata/C2PA/IPFS fields specified</span></div>
-  <div class="gap-item"><span class="gap-status gap-discuss">DISCUSS</span><span class="gap-text">Agent trust model &rarr; scaffolding as default; autonomous as upgrade</span></div>
-  <div class="gap-item"><span class="gap-status gap-discuss">DISCUSS</span><span class="gap-text">External calibration &rarr; quarterly blind spot audits</span></div>
-  <div class="gap-item"><span class="gap-status gap-discuss">DISCUSS</span><span class="gap-text">Third-party representation &rarr; unconfirmed nodes, visibility rules</span></div>
-  <div class="gap-item"><span class="gap-status gap-discuss">DISCUSS</span><span class="gap-text">Mode 2 market theory &rarr; decision-support use cases clarified</span></div>
-</div>
-
-<div class="ve-card anim" style="--i:35; margin-bottom:20px;">
-  <div class="card-label" style="color:var(--terracotta)">Open Gaps</div>
-  <div class="gap-item"><span class="gap-id" style="color:var(--terracotta)">#1</span><span class="gap-status gap-open">BLOCKER</span><span class="gap-text">774 nodes, zero artworks. Entire prompting layer depends on artwork nodes.</span></div>
-  <div class="gap-item"><span class="gap-id" style="color:var(--terracotta)">#3</span><span class="gap-status gap-open">OPEN</span><span class="gap-text">Geographic intake strategy. 80% North American/European intake.</span></div>
-  <div class="gap-item"><span class="gap-id" style="color:var(--terracotta)">#6</span><span class="gap-status gap-open">OPEN</span><span class="gap-text">Artwork media hosting strategy (external link, direct hosting, or hybrid).</span></div>
-</div>
-
-<div class="ve-card anim" style="--i:36; margin-bottom:40px;">
-  <div class="card-label" style="color:var(--gold)">New in v3.1</div>
-  <div class="gap-item"><span class="gap-id" style="color:var(--gold)">#17</span><span class="gap-status gap-new">NEW</span><span class="gap-text">Artwork rendering in Sense 3D space (video, interactive, high-res serving strategy).</span></div>
-  <div class="gap-item"><span class="gap-id" style="color:var(--gold)">#18</span><span class="gap-status gap-new">NEW</span><span class="gap-text">Connect room identity minimum (how much identity before it becomes surveillance).</span></div>
-</div>
 
 </div><!-- /main -->
 </div><!-- /wrap -->
 
-<script type="module">
-  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+<script>
+// ============ READING PROGRESS BAR ============
+const progressBar = document.getElementById('progressBar');
+function updateProgress() {
+  const scrollTop = window.scrollY;
+  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+  progressBar.style.width = progress + '%';
+}
+window.addEventListener('scroll', updateProgress, { passive: true });
 
-  const config = {
-    fitPadding: 28, minHeight: 360, maxHeightPx: 960, maxHeightVh: 0.84,
-    maxInitialZoom: 1.8, minZoom: 0.08, maxZoom: 6.5, zoomStep: 0.14, readabilityFloor: 0.58
-  };
-  const clamp = (n, lo, hi) => Math.max(lo, Math.min(hi, n));
-  let activeDrag = null;
-  addEventListener('mousemove', e => activeDrag?.onMove(e));
-  addEventListener('mouseup', () => { activeDrag?.onEnd(); activeDrag = null; });
+// ============ TOC ACTIVE STATE (IntersectionObserver) ============
+const tocLinks = document.querySelectorAll('.toc a');
+const sections = [];
+tocLinks.forEach(link => {
+  const id = link.getAttribute('href').slice(1);
+  const el = document.getElementById(id);
+  if (el) sections.push({ id, el, link });
+});
 
-  const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const observerOptions = {
+  rootMargin: '-10% 0px -80% 0px',
+  threshold: 0
+};
 
-  mermaid.initialize({
-    startOnLoad: false,
-    theme: 'base',
-    look: 'classic',
-    themeVariables: {
-      fontFamily: "'Syne', sans-serif",
-      fontSize: '14px',
-      primaryColor: isDark ? '#1a1a1a' : '#f0f0f0',
-      primaryBorderColor: isDark ? '#7aff9c' : '#1A1A1A',
-      primaryTextColor: isDark ? '#e8e8e8' : '#1A1A1A',
-      secondaryColor: isDark ? '#1a2a1a' : '#f0f8f0',
-      secondaryBorderColor: isDark ? '#c2dbbf' : '#444444',
-      secondaryTextColor: isDark ? '#e8e8e8' : '#1A1A1A',
-      tertiaryColor: isDark ? '#1a1a2a' : '#f0f4f8',
-      tertiaryBorderColor: isDark ? '#85b0e1' : '#444444',
-      tertiaryTextColor: isDark ? '#e8e8e8' : '#1A1A1A',
-      lineColor: isDark ? '#555555' : '#cccccc',
-      noteBkgColor: isDark ? '#1f1f1f' : '#fafafa',
-      noteTextColor: isDark ? '#e8e8e8' : '#1A1A1A',
-      noteBorderColor: isDark ? '#7aff9c' : '#1A1A1A',
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      tocLinks.forEach(l => l.classList.remove('active'));
+      const match = sections.find(s => s.el === entry.target);
+      if (match) match.link.classList.add('active');
     }
   });
+}, observerOptions);
 
-  function initDiagram(shell) {
-    const wrap = shell.querySelector('.mermaid-wrap');
-    const viewport = shell.querySelector('.mermaid-viewport');
-    const canvas = shell.querySelector('.mermaid-canvas');
-    const source = shell.querySelector('.diagram-source');
-    const label = shell.querySelector('.zoom-label');
-    if (!wrap || !viewport || !canvas || !source || !label) return;
+sections.forEach(s => observer.observe(s.el));
 
-    let zoom = 1, fitMode = 'contain', panX = 0, panY = 0, svgW = 0, svgH = 0;
-    let sx=0, sy=0, spx=0, spy=0, touchDist=0, touchCx=0, touchCy=0;
+// ============ SCROLL REVEAL ANIMATION ============
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    function constrainPan() {
-      const vpW=viewport.clientWidth, vpH=viewport.clientHeight;
-      const rW=svgW*zoom, rH=svgH*zoom, pad=config.fitPadding;
-      panX = (rW+pad*2<=vpW) ? (vpW-rW)/2 : clamp(panX, vpW-rW-pad, pad);
-      panY = (rH+pad*2<=vpH) ? (vpH-rH)/2 : clamp(panY, vpH-rH-pad, pad);
-    }
-    function applyTransform() {
-      const svg = canvas.querySelector('svg');
-      if (!svg || !svgW) return;
-      constrainPan();
-      svg.style.width = (svgW*zoom)+'px';
-      svg.style.height = (svgH*zoom)+'px';
-      canvas.style.transform = `translate(${panX}px, ${panY}px)`;
-      label.textContent = Math.round(zoom*100)+'% \u2014 '+fitMode;
-    }
-    function canPan() {
-      return svgW*zoom+config.fitPadding*2>viewport.clientWidth || svgH*zoom+config.fitPadding*2>viewport.clientHeight;
-    }
-    function computeSmartFit() {
-      const vpW=viewport.clientWidth, vpH=viewport.clientHeight;
-      const aW=Math.max(80,vpW-config.fitPadding*2), aH=Math.max(80,vpH-config.fitPadding*2);
-      const contain=Math.min(aW/svgW, aH/svgH);
-      let z=contain, mode='contain';
-      if(contain<config.readabilityFloor){
-        const cR=svgH/svgW, vR=vpH/Math.max(vpW,1);
-        if(cR>=vR){z=aW/svgW;mode='width-priority';}else{z=aH/svgH;mode='height-priority';}
-      }
-      return {zoom:clamp(z,config.minZoom,config.maxInitialZoom),mode};
-    }
-    function fitDiagram() {
-      if(!svgW) return;
-      const fit=computeSmartFit(); zoom=fit.zoom; fitMode=fit.mode;
-      panX=(viewport.clientWidth-svgW*zoom)/2; panY=(viewport.clientHeight-svgH*zoom)/2;
-      applyTransform();
-    }
-    function setOneToOne() {
-      zoom=clamp(1,config.minZoom,config.maxZoom); fitMode='1:1';
-      panX=(viewport.clientWidth-svgW*zoom)/2; panY=(viewport.clientHeight-svgH*zoom)/2;
-      applyTransform();
-    }
-    function zoomAround(factor,cx,cy) {
-      const next=clamp(zoom*factor,config.minZoom,config.maxZoom);
-      const ratio=next/zoom;
-      panX=cx-ratio*(cx-panX); panY=cy-ratio*(cy-panY);
-      zoom=next; fitMode='custom'; applyTransform();
-    }
-    function readSvgNaturalSize(svg) {
-      let w=0,h=0;
-      if(svg.viewBox?.baseVal?.width>0){w=svg.viewBox.baseVal.width;h=svg.viewBox.baseVal.height;}
-      if(!w){w=parseFloat(svg.getAttribute('width'))||0;h=parseFloat(svg.getAttribute('height'))||0;}
-      if(!w){const b=svg.getBBox();w=b.width;h=b.height;}
-      if(!w){const r=svg.getBoundingClientRect();w=r.width||1000;h=r.height||700;}
-      if(!svg.getAttribute('viewBox'))svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
-      return {w,h};
-    }
-    function setAdaptiveHeight() {
-      if(!svgW)return;
-      const usableW=Math.max(280,wrap.getBoundingClientRect().width-2);
-      const idealH=(svgH/svgW)*usableW+config.fitPadding*2;
-      const maxVp=Math.floor(innerHeight*config.maxHeightVh);
-      const hardMax=Math.min(config.maxHeightPx,Math.max(config.minHeight+40,maxVp));
-      wrap.style.height=Math.round(clamp(idealH,config.minHeight,hardMax))+'px';
-    }
-    function openInNewTab() {
-      const svg=canvas.querySelector('svg'); if(!svg) return;
-      const clone=svg.cloneNode(true); clone.style.width=''; clone.style.height='';
-      const bg=isDark?'#0a0a0a':'#FFFFFF';
-      const html=`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Diagram</title><style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:${bg};padding:40px;box-sizing:border-box}svg{max-width:100%;max-height:90vh;height:auto}</style></head><body>${clone.outerHTML}</body></html>`;
-      open(URL.createObjectURL(new Blob([html],{type:'text/html'})),'_blank');
-    }
-    async function render() {
-      try {
-        const code=source.textContent.trim(); if(!code){label.textContent='Error: Empty source';return;}
-        const id='diagram-'+Date.now()+'-'+Math.random().toString(36).slice(2,8);
-        const {svg}=await mermaid.render(id,code);
-        canvas.innerHTML=svg;
-        const svgNode=canvas.querySelector('svg'); if(!svgNode){label.textContent='Error: No SVG';return;}
-        const size=readSvgNaturalSize(svgNode); svgW=size.w; svgH=size.h;
-        svgNode.removeAttribute('width'); svgNode.removeAttribute('height');
-        svgNode.style.maxWidth='none'; svgNode.style.display='block';
-        setAdaptiveHeight(); fitDiagram();
-      } catch(err){console.error('Mermaid render failed:',err);label.textContent='Error: '+(err.message||'Render failed');}
-    }
-    const actions={'zoom-in':()=>zoomAround(1+config.zoomStep,viewport.clientWidth/2,viewport.clientHeight/2),'zoom-out':()=>zoomAround(1/(1+config.zoomStep),viewport.clientWidth/2,viewport.clientHeight/2),'zoom-fit':fitDiagram,'zoom-one':setOneToOne,'zoom-expand':openInNewTab};
-    Object.entries(actions).forEach(([a,h])=>wrap.querySelector(`[data-action="${a}"]`)?.addEventListener('click',h));
-    viewport.addEventListener('dblclick',fitDiagram);
-    viewport.addEventListener('wheel',(e)=>{
-      if(e.ctrlKey||e.metaKey){e.preventDefault();const r=viewport.getBoundingClientRect();zoomAround(e.deltaY<0?1+config.zoomStep:1/(1+config.zoomStep),e.clientX-r.left,e.clientY-r.top);return;}
-      if(canPan()){e.preventDefault();panX-=e.deltaX;panY-=e.deltaY;applyTransform();}
-    },{passive:false});
-    viewport.addEventListener('mousedown',(e)=>{
-      if(e.target.closest('.zoom-controls')||!canPan())return;
-      wrap.classList.add('is-panning');sx=e.clientX;sy=e.clientY;spx=panX;spy=panY;e.preventDefault();
-      activeDrag={onMove:ev=>{panX=spx+(ev.clientX-sx);panY=spy+(ev.clientY-sy);applyTransform();},onEnd:()=>wrap.classList.remove('is-panning')};
-    });
-    viewport.addEventListener('touchstart',(e)=>{
-      if(e.touches.length===1){sx=e.touches[0].clientX;sy=e.touches[0].clientY;spx=panX;spy=panY;}
-      else if(e.touches.length===2){const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY;touchDist=Math.sqrt(dx*dx+dy*dy);const r=viewport.getBoundingClientRect();touchCx=(e.touches[0].clientX+e.touches[1].clientX)/2-r.left;touchCy=(e.touches[0].clientY+e.touches[1].clientY)/2-r.top;}
-    },{passive:true});
-    viewport.addEventListener('touchmove',(e)=>{
-      if(e.touches.length===1&&canPan()){if(touchDist>0){sx=e.touches[0].clientX;sy=e.touches[0].clientY;spx=panX;spy=panY;touchDist=0;}e.preventDefault();panX=spx+(e.touches[0].clientX-sx);panY=spy+(e.touches[0].clientY-sy);applyTransform();}
-      else if(e.touches.length===2&&touchDist>0){e.preventDefault();const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY,d=Math.sqrt(dx*dx+dy*dy);zoomAround(d/touchDist,touchCx,touchCy);touchDist=d;}
-    },{passive:false});
-    new ResizeObserver(()=>{if(svgW){setAdaptiveHeight();fitDiagram();}}).observe(wrap);
-    render();
-  }
-  document.querySelectorAll('.diagram-shell').forEach(initDiagram);
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 </script>
-
-<script>
-(function(){
-  const toc=document.getElementById('toc');
-  const links=toc.querySelectorAll('a');
-  const sections=[];
-  links.forEach(link=>{const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el)sections.push({id,el,link});});
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{if(entry.isIntersecting){links.forEach(l=>l.classList.remove('active'));const match=sections.find(s=>s.el===entry.target);if(match){match.link.classList.add('active');if(window.innerWidth<=1000)match.link.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}}});
-  },{rootMargin:'-10% 0px -80% 0px'});
-  sections.forEach(s=>observer.observe(s.el));
-  links.forEach(link=>{link.addEventListener('click',e=>{e.preventDefault();const id=link.getAttribute('href').slice(1);const el=document.getElementById(id);if(el){el.scrollIntoView({behavior:'smooth',block:'start'});history.replaceState(null,'','#'+id);}});});
-})();
-</script>
-
 </body>
 </html>
